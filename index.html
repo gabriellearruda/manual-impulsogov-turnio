@@ -318,6 +318,12 @@
       margin-bottom: 28px;
     }
 
+    .cards-inline { grid-template-columns: repeat(4, 1fr); }
+
+    @media (max-width: 768px) {
+      .cards-inline { grid-template-columns: repeat(2, 1fr); }
+    }
+
     .card {
       background: var(--card-bg);
       border: 1px solid var(--border);
@@ -741,7 +747,7 @@
 
       <p class="body">Antes de criar qualquer chatbot, é importante saber com o que você está trabalhando. O WhatsApp tem versões diferentes para empresas — e a que usamos aqui <strong>não é o aplicativo comum</strong>. Abaixo estão as quatro peças principais do ecossistema: entender o papel de cada uma evita confusão na hora de configurar, pedir acesso ou resolver problemas.</p>
 
-      <div class="cards">
+      <div class="cards cards-inline">
         <div class="card">
           <div class="card-icon">📱</div>
           <h3>WhatsApp Business App</h3>
