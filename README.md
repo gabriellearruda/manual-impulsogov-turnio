@@ -18,11 +18,3 @@ Este guia cobre todo o processo, do zero ao monitoramento em produção, e foi e
 8. Monitoramento e Métricas
 9. Manutenção e Iteração
 10. Recursos e Links de Referência
-
-## Como usar
-
-Site estático de arquivo único (`index.html`). Abra diretamente no navegador ou faça deploy na Vercel.
-
-## Deploy na Vercel
-
-Importe o repositório em [vercel.com/new](https://vercel.com/new). Nenhuma configuração necessária.
