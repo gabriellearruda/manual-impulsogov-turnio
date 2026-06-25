@@ -573,7 +573,7 @@
     }
 
     /* ── MISC ── */
-    h3.sub   { font-size: 18.4px; font-weight: 700; color: var(--green-dark); margin: 28px 0 14px; }
+    h3.sub   { font-size: 21px; font-weight: 700; color: #0a5c52; margin: 28px 0 14px; }
     p.body   { font-size: 14px; color: var(--text-muted); line-height: 1.7; margin-bottom: 16px; }
     ul.list  { padding-left: 20px; margin-bottom: 20px; }
     ul.list li { font-size: 14px; color: var(--text-muted); line-height: 1.8; }
@@ -703,16 +703,41 @@
 
       <h3 class="sub">WABAs atuais e sistema de pagamento</h3>
       <p class="body">Atualmente a ImpulsoGov opera suas WABAs (WhatsApp Business Accounts) vinculadas ao Meta Business Manager da organização, dentro da estrutura contratada com o Turn.io. Cada WABA agrupa os números de telefone usados nos diferentes projetos e chatbots.</p>
-      <p class="body">O <strong>pagamento pelo uso da API do WhatsApp</strong> segue o modelo da Meta baseado em <strong>conversas</strong> (não por mensagem individual). Pontos importantes do modelo:</p>
-      <ul class="list">
-        <li>A cobrança é feita por <strong>conversa</strong> — uma janela de 24h iniciada com um usuário, dentro da qual mensagens ilimitadas podem ser trocadas</li>
-        <li>O valor varia conforme a <strong>categoria</strong> (Marketing, Utilidade, Autenticação, Serviço) e o país do destinatário</li>
-        <li>Conversas iniciadas pelo usuário (Serviço) costumam ter custo menor — ou gratuito — comparadas às iniciadas pela empresa via template</li>
-        <li>O faturamento e a gestão dos custos passam pela relação com o <strong>Turn.io</strong>, que intermedia a cobrança da Meta</li>
-      </ul>
-      <div class="callout warning">
-        <span class="callout-icon">💰</span>
-        <div><strong>Sobre faturamento e custos</strong>Questões sobre valores, faturas, limites de gasto ou configuração de pagamento das WABAs devem ser tratadas com <strong>João Abreu</strong>, que gerencia a relação comercial com o Turn.io e a Meta.</div>
+
+      <p class="body">O custo total é composto por <strong>três cobranças distintas</strong>, que se somam:</p>
+      <div class="cards">
+        <div class="card">
+          <div class="card-icon">📦</div>
+          <h3>1. Inscrição (Subscription)</h3>
+          <p>Assinatura da plataforma Turn.io. É um valor recorrente por WABA, definido pelo plano contratado (<code>enterprise_subscription</code>, <code>pro_subscription</code> etc.). Independe do volume de uso.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">📞</div>
+          <h3>2. Números de telefone</h3>
+          <p>Cada número de telefone ativo dentro de uma WABA pode ter um custo associado. Quanto mais números a organização mantém, maior essa parcela.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">💬</div>
+          <h3>3. Mensagens / Conversas</h3>
+          <p>Cobrança da Meta por <strong>conversa</strong> (janela de 24h, não por mensagem individual). O valor varia conforme a <strong>categoria</strong> — Marketing, Utilidade, Autenticação ou Serviço — e o país do destinatário.</p>
+        </div>
+      </div>
+
+      <h3 class="sub">WABAs ativos da ImpulsoGov</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Plano</th><th>WABA / Descrição</th></tr></thead>
+          <tbody>
+            <tr><td><code>enterprise_subscription</code></td><td>Plano principal da plataforma</td></tr>
+            <tr><td><code>enterprise_subscription</code></td><td>WABA ImpulsoGov</td></tr>
+            <tr><td><code>pro_subscription</code></td><td>ImpulsoGov · Pesquisa Saúde Mental</td></tr>
+            <tr><td><code>enterprise_subscription</code></td><td>WABA ImpulsoGov · Mensageria</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="callout info">
+        <span class="callout-icon">📄</span>
+        <div><strong>Valores e detalhes comerciais</strong>Os valores de cada assinatura, número e volume de mensagens não são exibidos neste manual. Para informações sobre faturamento, fale com <strong>João Abreu</strong>.</div>
       </div>
     </div>
     <div class="page-nav">
