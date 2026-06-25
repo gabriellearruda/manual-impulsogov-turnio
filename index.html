@@ -58,7 +58,7 @@
         Manual ImpulsoGov · Turn.io
       </div>
       <h1>Criando Chatbots no<br/><span>WhatsApp</span> com Turn.io</h1>
-      <p>Este manual guia qualquer pessoa do time — independente de conhecimento técnico — no processo completo de criação de chatbots no WhatsApp, desde a configuração da conta até o monitoramento em produção. Usamos o <strong style="color:#fff">Turn.io</strong> como plataforma e a <strong style="color:#fff">API oficial do WhatsApp</strong> (Meta).</p>
+      <p>Este manual guia qualquer pessoa do time — independente de conhecimento técnico — no processo de criação de chatbots no WhatsApp, desde a configuração da conta até o monitoramento em produção.</p>
     </div>
     <div class="section-wrap">
       <div class="section-header">
@@ -69,7 +69,7 @@
         </div>
       </div>
 
-      <p class="body">Antes de criar qualquer chatbot, é importante saber com o que você está trabalhando. O WhatsApp tem versões diferentes para empresas — e a que usamos aqui <strong>não é o aplicativo comum</strong>. Abaixo estão as quatro peças principais do ecossistema: entender o papel de cada uma evita confusão na hora de configurar, pedir acesso ou resolver problemas.</p>
+      <p class="body">Antes de criar qualquer chatbot, é importante saber que o WhatsApp tem versões diferentes para empresas. Abaixo estão as quatro peças principais do ecossistema: entender o papel de cada uma evita confusão na hora de fazer pedidos e se comunicar com parceiros.</p>
 
       <div class="cards cards-inline">
         <div class="card">
@@ -109,15 +109,17 @@
       <div class="glossary-item"><span class="glossary-term">Messaging Tier</span><span class="glossary-def">Limite de mensagens por dia. Começa em 1.000 e sobe automaticamente com uso e boa qualidade.</span></div>
       <div class="glossary-item" style="border:none"><span class="glossary-term">Phone Quality Rating</span><span class="glossary-def">Avaliação do número pelo Meta (Verde/Amarelo/Vermelho). Impacta limites e pode levar à suspensão.</span></div>
 
-      <h3 class="sub">Contrato com o Turn.io</h3>
-      <p class="body">A ImpulsoGov possui um contrato vigente com o Turn.io, que define os termos de uso da plataforma, número de WABAs/canais contratados, volume de mensagens e condições comerciais. Detalhes sobre o contrato — vigência, escopo, renovação ou alterações — não são públicos neste manual.</p>
-      <div class="callout info">
-        <span class="callout-icon">📄</span>
-        <div><strong>Informações sobre o contrato</strong>Para qualquer dúvida ou necessidade relacionada ao contrato com o Turn.io, fale com <strong style="white-space:nowrap">João Abreu</strong>, responsável por essa relação na ImpulsoGov.</div>
-      </div>
-
       <h3 class="sub">WABAs atuais</h3>
-      <p class="body">Atualmente a ImpulsoGov opera suas WABAs (WhatsApp Business Accounts) vinculadas ao Meta Business Manager da organização, dentro da estrutura contratada com o Turn.io. Cada WABA agrupa os números de telefone usados nos diferentes projetos e chatbots — há WABAs dedicadas à ImpulsoGov, à Pesquisa de Saúde Mental e à Mensageria.</p>
+      <p class="body">Atualmente a ImpulsoGov opera suas WABAs (WhatsApp Business Accounts) vinculadas ao Meta Business Manager da organização, dentro da estrutura contratada com o Turn.io. 
+        Salvo os números que durante o piloto foi-se configurado dentro da Twilio. Mas já esta planejada a transição para o Turn.io.
+        Cada WABA agrupa os números de telefone usados nos diferentes projetos e chatbots. 
+        Cada WABA tem um nome de projeto e um ID.
+        Mais detalhes abaixo.</p>
+
+      <h3 class="sub">Contrato com a Turn.io</h3>
+      <p class="body">Detalhes sobre o contrato não estão públicos neste manual.
+        Informações sobre o contrato, fale com <strong style="white-space:nowrap">João Abreu</strong>, responsável que assinou o contrato, ou a responsável de parcerias na <strong>gestão interna</strong>, que detem todos os registros.
+      </p>
 
       <h3 class="sub">Sistema de pagamento</h3>
       <p class="body">O custo total é composto por <strong>três cobranças distintas</strong>, que se somam. Clique em cada uma para ver os detalhes.</p>
@@ -527,6 +529,11 @@ O que você precisa?
       </div>
 
       <h3 class="sub">Métricas no Meta Business Manager</h3>
+      <div class="callout warning">
+        <span class="callout-icon">⚠️</span>
+        <div><strong>Alerta de qualidade</strong>Se o Quality Rating cair para Amarelo, você recebe um e-mail do Meta. Investigue imediatamente qual campanha ou fluxo está gerando bloqueios. Causa mais comum: mensagem de citopatológico sendo denunciada.</div>
+      </div>
+    </div>
       <div class="table-wrap">
         <table>
           <thead><tr><th>Métrica</th><th>O que monitorar</th></tr></thead>
@@ -538,12 +545,6 @@ O que você precisa?
           </tbody>
         </table>
       </div>
-
-      <div class="callout warning">
-        <span class="callout-icon">⚠️</span>
-        <div><strong>Alerta de qualidade</strong>Se o Quality Rating cair para Amarelo, você recebe um e-mail do Meta. Investigue imediatamente qual campanha ou fluxo está gerando bloqueios. Causa mais comum: mensagem de citopatológico sendo denunciada.</div>
-      </div>
-    </div>
     <div class="page-nav">
       <button onclick="goTo(6)">← Anterior</button>
       <span class="page-counter">7 de 8</span>
