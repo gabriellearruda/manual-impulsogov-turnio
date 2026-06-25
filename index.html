@@ -1,0 +1,1211 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Manual: Chatbots no WhatsApp com Turn.io</title>
+  <style>
+    :root {
+      --green: #25D366;
+      --green-dark: #128C7E;
+      --green-light: #DCF8C6;
+      --sidebar-bg: #1a1a2e;
+      --sidebar-hover: #25D36622;
+      --text: #1a1a1a;
+      --text-muted: #6b7280;
+      --bg: #f9fafb;
+      --card-bg: #ffffff;
+      --border: #e5e7eb;
+      --code-bg: #f3f4f6;
+      --sidebar-width: 280px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      display: flex;
+      min-height: 100vh;
+    }
+
+    /* ── SIDEBAR ── */
+    #sidebar {
+      width: var(--sidebar-width);
+      background: var(--sidebar-bg);
+      color: #fff;
+      position: fixed;
+      top: 0; left: 0;
+      height: 100vh;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      z-index: 100;
+      transition: transform 0.3s ease;
+    }
+
+    #sidebar::-webkit-scrollbar { width: 4px; }
+    #sidebar::-webkit-scrollbar-thumb { background: #ffffff22; border-radius: 2px; }
+
+    .sidebar-header {
+      padding: 24px 20px 16px;
+      border-bottom: 1px solid #ffffff15;
+    }
+
+    .sidebar-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 6px;
+    }
+
+    .sidebar-logo span {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--green);
+      line-height: 1.2;
+    }
+
+    .sidebar-subtitle {
+      font-size: 11px;
+      color: #ffffff55;
+      margin-left: 34px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    nav { padding: 12px 0 24px; flex: 1; }
+
+    .nav-section-title {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: #ffffff40;
+      padding: 16px 20px 6px;
+      font-weight: 600;
+    }
+
+    nav a {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 9px 20px;
+      color: #ffffffcc;
+      text-decoration: none;
+      font-size: 13.5px;
+      border-left: 3px solid transparent;
+      transition: all 0.15s;
+      cursor: pointer;
+    }
+
+    nav a:hover {
+      background: var(--sidebar-hover);
+      color: #fff;
+      border-left-color: #ffffff30;
+    }
+
+    nav a.active {
+      background: #25D36618;
+      color: var(--green);
+      border-left-color: var(--green);
+      font-weight: 600;
+    }
+
+    nav a .nav-num {
+      font-size: 11px;
+      background: #ffffff18;
+      border-radius: 4px;
+      padding: 1px 6px;
+      flex-shrink: 0;
+      font-weight: 600;
+    }
+
+    nav a.active .nav-num {
+      background: var(--green);
+      color: #fff;
+    }
+
+    /* ── MOBILE TOGGLE ── */
+    #menu-toggle {
+      display: none;
+      position: fixed;
+      top: 16px; left: 16px;
+      z-index: 200;
+      background: var(--sidebar-bg);
+      border: none;
+      border-radius: 8px;
+      padding: 10px;
+      cursor: pointer;
+      color: #fff;
+    }
+
+    /* ── MAIN ── */
+    #main {
+      margin-left: var(--sidebar-width);
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    /* ── PAGE (each section) ── */
+    .page {
+      display: none;
+      flex: 1;
+      flex-direction: column;
+      animation: fadeIn 0.2s ease;
+    }
+
+    .page.active {
+      display: flex;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── HERO ── */
+    .hero {
+      background: linear-gradient(135deg, var(--green-dark) 0%, #1a3a2e 100%);
+      color: #fff;
+      padding: 56px 48px 48px;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: #ffffff22;
+      border-radius: 20px;
+      padding: 4px 12px;
+      font-size: 12px;
+      margin-bottom: 16px;
+      color: #ffffffcc;
+    }
+
+    .hero h1 {
+      font-size: 32px;
+      font-weight: 800;
+      line-height: 1.2;
+      margin-bottom: 12px;
+    }
+
+    .hero h1 span { color: var(--green); }
+
+    .hero p {
+      font-size: 16px;
+      color: #ffffffbb;
+      max-width: 560px;
+      line-height: 1.6;
+      margin-bottom: 24px;
+    }
+
+    .hero-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+
+    .chip {
+      background: #ffffff18;
+      border: 1px solid #ffffff25;
+      border-radius: 6px;
+      padding: 5px 12px;
+      font-size: 12px;
+      color: #ffffffcc;
+    }
+
+    /* ── INDEX CARDS (home page) ── */
+    .index-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 16px;
+      padding: 40px 48px;
+    }
+
+    .index-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px;
+      cursor: pointer;
+      transition: all 0.15s;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .index-card:hover {
+      border-color: var(--green);
+      box-shadow: 0 4px 16px #25D36620;
+      transform: translateY(-2px);
+    }
+
+    .index-card .ic-num {
+      display: inline-block;
+      background: var(--green);
+      color: #fff;
+      font-size: 11px;
+      font-weight: 800;
+      border-radius: 6px;
+      padding: 2px 8px;
+      margin-bottom: 10px;
+    }
+
+    .index-card h3 { font-size: 14px; font-weight: 700; margin-bottom: 6px; }
+    .index-card p  { font-size: 13px; color: var(--text-muted); line-height: 1.5; }
+
+    /* ── SECTION CONTENT ── */
+    .section-wrap {
+      padding: 48px 48px 64px;
+      max-width: 860px;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      margin-bottom: 32px;
+      padding-bottom: 20px;
+      border-bottom: 2px solid var(--border);
+    }
+
+    .section-num {
+      background: var(--green);
+      color: #fff;
+      font-size: 13px;
+      font-weight: 800;
+      border-radius: 8px;
+      width: 36px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 4px;
+    }
+
+    .section-header h2 {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--text);
+      line-height: 1.3;
+    }
+
+    .section-header p {
+      font-size: 14px;
+      color: var(--text-muted);
+      margin-top: 4px;
+      line-height: 1.5;
+    }
+
+    /* ── CARDS ── */
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 16px;
+      margin-bottom: 28px;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px;
+    }
+
+    .card-icon { font-size: 24px; margin-bottom: 10px; }
+    .card h3 { font-size: 14px; font-weight: 700; margin-bottom: 6px; }
+    .card p  { font-size: 13px; color: var(--text-muted); line-height: 1.5; }
+
+    /* ── STEPS ── */
+    .steps { display: flex; flex-direction: column; gap: 16px; margin-bottom: 28px; }
+
+    .step {
+      display: flex;
+      gap: 16px;
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px;
+    }
+
+    .step-num {
+      background: #dcfce7;
+      color: var(--green-dark);
+      font-weight: 800;
+      font-size: 14px;
+      border-radius: 50%;
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .step h3 { font-size: 14px; font-weight: 700; margin-bottom: 4px; }
+    .step p  { font-size: 13px; color: var(--text-muted); line-height: 1.5; }
+
+    /* ── TABLE ── */
+    .table-wrap { overflow-x: auto; margin-bottom: 28px; }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13.5px;
+      background: var(--card-bg);
+      border-radius: 10px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+
+    th {
+      background: #f3f4f6;
+      font-weight: 700;
+      text-align: left;
+      padding: 12px 16px;
+      color: var(--text-muted);
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      border-bottom: 1px solid var(--border);
+    }
+
+    td {
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+      line-height: 1.5;
+    }
+
+    tr:last-child td { border-bottom: none; }
+    tr:hover td { background: #f9fafb; }
+
+    /* ── CALLOUTS ── */
+    .callout {
+      display: flex;
+      gap: 12px;
+      padding: 16px 20px;
+      border-radius: 10px;
+      margin-bottom: 24px;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .callout-icon { font-size: 18px; flex-shrink: 0; margin-top: 1px; }
+    .callout strong { display: block; margin-bottom: 4px; }
+    .callout.info    { background: #eff6ff; border-left: 4px solid #3b82f6; }
+    .callout.warning { background: #fffbeb; border-left: 4px solid #f59e0b; }
+    .callout.success { background: #f0fdf4; border-left: 4px solid #22c55e; }
+    .callout.danger  { background: #fef2f2; border-left: 4px solid #ef4444; }
+
+    /* ── CODE ── */
+    .code-block {
+      background: #1e1e2e;
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 24px;
+      overflow-x: auto;
+    }
+
+    .code-label {
+      font-size: 11px;
+      color: #6272a4;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .code-block pre {
+      color: #cdd6f4;
+      font-family: 'Fira Code', Consolas, monospace;
+      font-size: 13px;
+      line-height: 1.7;
+    }
+
+    code {
+      background: var(--code-bg);
+      border-radius: 4px;
+      padding: 2px 6px;
+      font-size: 12.5px;
+      font-family: monospace;
+      color: var(--green-dark);
+    }
+
+    /* ── TAGS ── */
+    .tag {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 11px;
+      font-weight: 600;
+    }
+    .tag.green  { background: #dcfce7; color: #166534; }
+    .tag.yellow { background: #fef9c3; color: #854d0e; }
+    .tag.red    { background: #fee2e2; color: #991b1b; }
+    .tag.blue   { background: #dbeafe; color: #1e40af; }
+    .tag.purple { background: #f3e8ff; color: #6b21a8; }
+
+    /* ── GLOSSARY ── */
+    .glossary-item {
+      display: flex;
+      gap: 16px;
+      padding: 14px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .glossary-item:last-child { border-bottom: none; }
+    .glossary-term { width: 180px; flex-shrink: 0; font-weight: 700; font-size: 14px; color: var(--green-dark); }
+    .glossary-def  { font-size: 13.5px; color: var(--text-muted); line-height: 1.5; }
+
+    /* ── CHECKLIST ── */
+    .checklist { display: flex; flex-direction: column; gap: 10px; margin-bottom: 28px; }
+
+    .check-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .check-box {
+      width: 20px;
+      height: 20px;
+      border: 2px solid var(--green);
+      border-radius: 4px;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    /* ── CONTACTS ── */
+    .contacts { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 16px; margin-bottom: 28px; }
+
+    .contact-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--green), var(--green-dark));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-weight: 700;
+      font-size: 14px;
+      margin-bottom: 4px;
+    }
+
+    .contact-card h3   { font-size: 14px; font-weight: 700; }
+    .contact-card .role { font-size: 12px; color: var(--text-muted); }
+    .contact-card a    { font-size: 13px; color: var(--green-dark); text-decoration: none; }
+    .contact-card a:hover { text-decoration: underline; }
+
+    /* ── FLOW ── */
+    .flow {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 4px;
+      margin: 20px 0 28px;
+    }
+
+    .flow-step {
+      background: var(--card-bg);
+      border: 2px solid var(--green);
+      border-radius: 10px;
+      padding: 10px 14px;
+      font-size: 12px;
+      font-weight: 600;
+      text-align: center;
+      min-width: 90px;
+    }
+
+    .flow-arrow { font-size: 18px; color: var(--green); padding: 0 2px; }
+
+    /* ── NAV FOOTER (prev/next) ── */
+    .page-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 24px 48px;
+      border-top: 1px solid var(--border);
+      margin-top: auto;
+      background: #fff;
+    }
+
+    .page-nav button {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 20px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: #fff;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text);
+      transition: all 0.15s;
+    }
+
+    .page-nav button:hover { border-color: var(--green); color: var(--green); }
+    .page-nav button:disabled { opacity: 0.3; cursor: default; }
+
+    .page-nav button.next {
+      background: var(--green);
+      color: #fff;
+      border-color: var(--green);
+    }
+
+    .page-nav button.next:hover { background: var(--green-dark); border-color: var(--green-dark); color: #fff; }
+
+    .page-counter {
+      font-size: 13px;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+
+    /* ── MISC ── */
+    h3.sub   { font-size: 16px; font-weight: 700; margin: 28px 0 14px; }
+    p.body   { font-size: 14px; color: var(--text-muted); line-height: 1.7; margin-bottom: 16px; }
+    ul.list  { padding-left: 20px; margin-bottom: 20px; }
+    ul.list li { font-size: 14px; color: var(--text-muted); line-height: 1.8; }
+    strong   { color: var(--text); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      #sidebar { transform: translateX(-100%); }
+      #sidebar.open { transform: translateX(0); }
+      #main { margin-left: 0; }
+      #menu-toggle { display: flex; align-items: center; justify-content: center; }
+      .hero { padding: 64px 24px 32px; }
+      .hero h1 { font-size: 22px; }
+      .section-wrap { padding: 24px 20px 40px; }
+      .index-grid { padding: 24px 20px; }
+      .page-nav { padding: 16px 20px; }
+    }
+  </style>
+</head>
+<body>
+
+<button id="menu-toggle" aria-label="Abrir menu" onclick="toggleSidebar()">
+  <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+    <line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/>
+  </svg>
+</button>
+
+<!-- ══════════ SIDEBAR ══════════ -->
+<aside id="sidebar">
+  <div class="sidebar-header">
+    <div class="sidebar-logo">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="#25D366">
+        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/>
+        <path d="M12 0C5.373 0 0 5.373 0 12c0 2.124.558 4.118 1.532 5.845L.043 23.29a.75.75 0 0 0 .921.921l5.444-1.49A11.94 11.94 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.803 9.803 0 0 1-5.006-1.37l-.36-.214-3.727 1.02 1.02-3.726-.214-.36A9.803 9.803 0 0 1 2.182 12C2.182 6.57 6.57 2.182 12 2.182S21.818 6.57 21.818 12 17.43 21.818 12 21.818z"/>
+      </svg>
+      <span>WhatsApp Chatbots<br/>com Turn.io</span>
+    </div>
+    <div class="sidebar-subtitle">Manual completo</div>
+  </div>
+  <nav id="nav">
+    <div class="nav-section-title">Fundamentos</div>
+    <a onclick="goTo(1)"><span class="nav-num">01</span> Conceitos Fundamentais</a>
+    <a onclick="goTo(2)"><span class="nav-num">02</span> Pré-requisitos e Contatos</a>
+
+    <div class="nav-section-title">Configuração</div>
+    <a onclick="goTo(3)"><span class="nav-num">03</span> Setup no Turn.io</a>
+    <a onclick="goTo(4)"><span class="nav-num">04</span> Templates de Mensagem</a>
+
+    <div class="nav-section-title">Desenvolvimento</div>
+    <a onclick="goTo(5)"><span class="nav-num">05</span> Construção do Fluxo</a>
+    <a onclick="goTo(6)"><span class="nav-num">06</span> Testes</a>
+
+    <div class="nav-section-title">Produção</div>
+    <a onclick="goTo(7)"><span class="nav-num">07</span> Publicação</a>
+    <a onclick="goTo(8)"><span class="nav-num">08</span> Monitoramento</a>
+    <a onclick="goTo(9)"><span class="nav-num">09</span> Manutenção</a>
+
+    <div class="nav-section-title">Referências</div>
+    <a onclick="goTo(10)"><span class="nav-num">10</span> Recursos e Links</a>
+  </nav>
+</aside>
+
+<!-- ══════════ MAIN ══════════ -->
+<div id="main">
+
+  <!-- ── PAGE 1: CONCEITOS ── -->
+  <div class="page active" id="page-1">
+    <div class="hero">
+      <div class="hero-badge">
+        <svg width="14" height="14" fill="#25D366" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.124.558 4.118 1.532 5.845L.043 23.29a.75.75 0 0 0 .921.921l5.444-1.49A11.94 11.94 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.803 9.803 0 0 1-5.006-1.37l-.36-.214-3.727 1.02 1.02-3.726-.214-.36A9.803 9.803 0 0 1 2.182 12C2.182 6.57 6.57 2.182 12 2.182S21.818 6.57 21.818 12 17.43 21.818 12 21.818z"/></svg>
+        Manual ImpulsoGov · Turn.io
+      </div>
+      <h1>Criando Chatbots no<br/><span>WhatsApp</span> com Turn.io</h1>
+      <p>Este manual guia qualquer pessoa do time — independente de conhecimento técnico — no processo completo de criação de chatbots no WhatsApp, desde a configuração da conta até o monitoramento em produção. Usamos o <strong style="color:#fff">Turn.io</strong> como plataforma e a <strong style="color:#fff">API oficial do WhatsApp</strong> (Meta).</p>
+    </div>
+    <div class="section-wrap">
+      <div class="section-header">
+        <div class="section-num">01</div>
+        <div>
+          <h2>Conceitos Fundamentais</h2>
+          <p>Entenda o ecossistema antes de começar a construir.</p>
+        </div>
+      </div>
+
+      <p class="body">Antes de criar qualquer chatbot, é importante saber com o que você está trabalhando. O WhatsApp tem versões diferentes para empresas — e a que usamos aqui <strong>não é o aplicativo comum</strong>. Abaixo estão as quatro peças principais do ecossistema: entender o papel de cada uma evita confusão na hora de configurar, pedir acesso ou resolver problemas.</p>
+
+      <div class="cards">
+        <div class="card">
+          <div class="card-icon">📱</div>
+          <h3>WhatsApp Business App</h3>
+          <p>Aplicativo gratuito para pequenas empresas. Limitado a 1 dispositivo, sem automação avançada.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">⚡</div>
+          <h3>WhatsApp Business API</h3>
+          <p>Versão para empresas de médio/grande porte. Permite automações, chatbots e envios em escala.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">🔗</div>
+          <h3>BSP (Turn.io)</h3>
+          <p>Business Solution Provider. Intermediário entre sua empresa e a API do WhatsApp.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">🏢</div>
+          <h3>Meta Business Manager</h3>
+          <p>Plataforma da Meta onde ficam as configurações da conta, aprovações e compliance.</p>
+        </div>
+      </div>
+
+      <h3 class="sub">Glossário essencial</h3>
+      <div class="glossary-item"><span class="glossary-term">WABA</span><span class="glossary-def"><strong>WhatsApp Business Account</strong> — a conta oficial da empresa no WhatsApp, vinculada ao Meta Business Manager. É dentro da WABA que ficam registrados os números de telefone da organização. Uma empresa pode ter múltiplas WABAs (ex: uma por projeto ou produto), e cada WABA pode conter vários números. Sem uma WABA ativa e verificada, não é possível usar a API do WhatsApp.</span></div>
+      <div class="glossary-item"><span class="glossary-term">Namespace</span><span class="glossary-def">Identificador único dos seus templates. Gerado automaticamente pelo Meta ao verificar a empresa.</span></div>
+      <div class="glossary-item"><span class="glossary-term">Template (HSM)</span><span class="glossary-def">Mensagem pré-aprovada pelo Meta para iniciar conversas fora da janela de 24h.</span></div>
+      <div class="glossary-item"><span class="glossary-term">Janela de 24h</span><span class="glossary-def">Após o usuário enviar qualquer mensagem, você tem 24h para responder livremente sem precisar de template.</span></div>
+      <div class="glossary-item"><span class="glossary-term">Sessão de conversa</span><span class="glossary-def">Período ativo de conversa. Inicia quando o usuário manda uma mensagem ou quando você envia um template.</span></div>
+      <div class="glossary-item"><span class="glossary-term">Inbox (Turn.io)</span><span class="glossary-def">Canal de comunicação no Turn.io. Cada número de telefone corresponde a uma Inbox.</span></div>
+      <div class="glossary-item"><span class="glossary-term">Journey / Flow</span><span class="glossary-def">Fluxo automatizado construído no Turn.io. Define a lógica de respostas do chatbot. <strong>Cada número de telefone tem suas próprias jornadas</strong> — os fluxos criados para um número não aparecem nem interferem nos demais. Isso permite que números diferentes tenham experiências de conversa completamente independentes.</span></div>
+      <div class="glossary-item"><span class="glossary-term">Messaging Tier</span><span class="glossary-def">Limite de mensagens por dia. Começa em 1.000 e sobe automaticamente com uso e boa qualidade.</span></div>
+      <div class="glossary-item" style="border:none"><span class="glossary-term">Phone Quality Rating</span><span class="glossary-def">Avaliação do número pelo Meta (Verde/Amarelo/Vermelho). Impacta limites e pode levar à suspensão.</span></div>
+    </div>
+    <div class="page-nav">
+      <button disabled>← Anterior</button>
+      <span class="page-counter">1 de 10</span>
+      <button class="next" onclick="goTo(2)">Próximo →</button>
+    </div>
+  </div>
+
+  <!-- ── PAGE 2: PRÉ-REQUISITOS ── -->
+  <div class="page" id="page-2">
+    <div class="section-wrap">
+      <div class="section-header">
+        <div class="section-num">02</div>
+        <div>
+          <h2>Pré-requisitos e Pontos de Contato</h2>
+          <p>O que você precisa ter antes de começar e com quem falar.</p>
+        </div>
+      </div>
+
+      <div class="callout warning">
+        <span class="callout-icon">⚠️</span>
+        <div><strong>Atenção ao prazo</strong>A verificação da empresa no Meta pode levar de 1 a 5 dias úteis. Inicie esse processo com antecedência.</div>
+      </div>
+
+      <h3 class="sub">Checklist de pré-requisitos</h3>
+      <div class="checklist">
+        <div class="check-item"><div class="check-box"></div><span>Acesso ao <strong>Meta Business Manager</strong> da empresa</span></div>
+        <div class="check-item"><div class="check-box"></div><span>Acesso ao <strong>Turn.io</strong> (workspace da organização)</span></div>
+        <div class="check-item"><div class="check-box"></div><span><strong>Número de telefone</strong> dedicado — não pode estar vinculado a outro app WhatsApp</span></div>
+        <div class="check-item"><div class="check-box"></div><span>Empresa <strong>verificada no Meta</strong> (necessário para aumento de limites)</span></div>
+        <div class="check-item"><div class="check-box"></div><span>Objetivo e <strong>fluxo do chatbot</strong> definidos antes de começar</span></div>
+        <div class="check-item"><div class="check-box"></div><span>Textos dos <strong>templates</strong> redigidos e aprovados internamente</span></div>
+      </div>
+
+      <h3 class="sub">Pontos de contato</h3>
+      <div class="contacts">
+        <div class="contact-card">
+          <div class="avatar">TI</div>
+          <h3>Equipe interna (TI/Produto)</h3>
+          <span class="role">Acesso ao Meta Business Manager e Turn.io</span>
+          <p style="font-size:13px;color:var(--text-muted);margin-top:4px;">Solicitar acesso, criar usuários e gerenciar permissões.</p>
+        </div>
+        <div class="contact-card">
+          <div class="avatar">T</div>
+          <h3>Suporte Turn.io</h3>
+          <span class="role">BSP / Provedor</span>
+          <a href="mailto:support@turn.io">support@turn.io</a>
+          <a href="https://whatsapp.turn.io" target="_blank">whatsapp.turn.io</a>
+        </div>
+        <div class="contact-card">
+          <div class="avatar">M</div>
+          <h3>Suporte Meta</h3>
+          <span class="role">Aprovações, suspensões, verificação</span>
+          <a href="https://business.facebook.com/help" target="_blank">business.facebook.com/help</a>
+        </div>
+      </div>
+
+      <div class="callout info">
+        <span class="callout-icon">ℹ️</span>
+        <div><strong>Pedindo acesso ao Turn.io</strong>Solicite ao responsável da conta que adicione seu e-mail como membro do workspace. Peça o nível de permissão adequado ao que você vai fazer (Admin para criar fluxos, Agent para atender conversas).</div>
+      </div>
+    </div>
+    <div class="page-nav">
+      <button onclick="goTo(1)">← Anterior</button>
+      <span class="page-counter">2 de 10</span>
+      <button class="next" onclick="goTo(3)">Próximo →</button>
+    </div>
+  </div>
+
+  <!-- ── PAGE 3: SETUP ── -->
+  <div class="page" id="page-3">
+    <div class="section-wrap">
+      <div class="section-header">
+        <div class="section-num">03</div>
+        <div>
+          <h2>Configuração Inicial no Turn.io</h2>
+          <p>Primeiros passos após ter acesso à plataforma.</p>
+        </div>
+      </div>
+
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">1</div>
+          <div><h3>Acessar o workspace</h3><p>Entre em <code>app.turn.io</code> com sua conta. Confirme que está no workspace correto da organização (nome visível no canto superior esquerdo).</p></div>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div><h3>Verificar ou criar uma Inbox</h3><p>Vá em <strong>Settings → Inboxes</strong>. Cada Inbox representa um número/canal. Para criar uma nova, clique em <strong>+ New Inbox</strong> e selecione <strong>WhatsApp</strong>.</p></div>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <div><h3>Vincular o número ao Meta</h3><p>O Turn.io vai guiar pelo processo de <strong>Embedded Signup</strong> — um fluxo do Facebook para autorizar o número. Tenha o acesso ao Meta Business Manager em mãos. O número não pode estar ativo em nenhum app do WhatsApp durante esse processo.</p></div>
+        </div>
+        <div class="step">
+          <div class="step-num">4</div>
+          <div><h3>Configurar o perfil do WhatsApp Business</h3><p>Em <strong>Settings → Profile</strong>, configure: nome de exibição, descrição, foto de perfil, e-mail, site e horário. Essas informações aparecem para os usuários no WhatsApp.</p></div>
+        </div>
+        <div class="step">
+          <div class="step-num">5</div>
+          <div><h3>Configurar agentes e times</h3><p>Em <strong>Settings → Agents</strong>, adicione os membros que vão atender conversas. Em <strong>Teams</strong>, agrupe agentes por assunto para facilitar o roteamento.</p></div>
+        </div>
+      </div>
+
+      <div class="callout success">
+        <span class="callout-icon">✅</span>
+        <div><strong>Como saber se funcionou</strong>Envie uma mensagem de teste para o número vinculado. Ela deve aparecer na Inbox do Turn.io em até 2 minutos. Se não aparecer, verifique o webhook em <strong>Settings → Integrations</strong>.</div>
+      </div>
+    </div>
+    <div class="page-nav">
+      <button onclick="goTo(2)">← Anterior</button>
+      <span class="page-counter">3 de 10</span>
+      <button class="next" onclick="goTo(4)">Próximo →</button>
+    </div>
+  </div>
+
+  <!-- ── PAGE 4: TEMPLATES ── -->
+  <div class="page" id="page-4">
+    <div class="section-wrap">
+      <div class="section-header">
+        <div class="section-num">04</div>
+        <div>
+          <h2>Templates de Mensagem (HSM)</h2>
+          <p>Como criar, enviar para aprovação e usar mensagens pré-aprovadas pelo Meta.</p>
+        </div>
+      </div>
+
+      <div class="callout warning">
+        <span class="callout-icon">⚠️</span>
+        <div><strong>Templates são obrigatórios fora da janela de 24h</strong>Para iniciar conversas ou reengajar usuários, use sempre um template aprovado.</div>
+      </div>
+
+      <h3 class="sub">Categorias de templates</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Categoria</th><th>Uso</th><th>Exemplos</th><th>Aprovação</th></tr></thead>
+          <tbody>
+            <tr><td><span class="tag green">Marketing</span></td><td>Promoções, novidades, engajamento</td><td>Lançamento de serviço, convite para evento</td><td>Mais rigorosa</td></tr>
+            <tr><td><span class="tag blue">Utilidade</span></td><td>Atualizações transacionais de opt-in</td><td>Confirmação de cadastro, resultado de exame</td><td>Moderada</td></tr>
+            <tr><td><span class="tag purple">Autenticação</span></td><td>Códigos de verificação (OTP)</td><td>Código de acesso, verificação de conta</td><td>Alta (estrutura fixa)</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3 class="sub">Como criar um template</h3>
+      <div class="steps">
+        <div class="step"><div class="step-num">1</div><div><h3>Acessar o gerenciador</h3><p>No Turn.io: <strong>Settings → Message Templates</strong>. Ou no Meta Business Manager em <strong>Conta do WhatsApp → Modelos de mensagem</strong>.</p></div></div>
+        <div class="step"><div class="step-num">2</div><div><h3>Escolher categoria e idioma</h3><p>Selecione a categoria mais adequada. Use <code>pt_BR</code> para português do Brasil.</p></div></div>
+        <div class="step"><div class="step-num">3</div><div><h3>Redigir o corpo da mensagem</h3><p>Use variáveis com <code>{{1}}</code>, <code>{{2}}</code> para conteúdo dinâmico. Ex: <em>"Olá, {{1}}! Seu protocolo é {{2}}."</em>. Você pode adicionar cabeçalho, rodapé e botões.</p></div></div>
+        <div class="step"><div class="step-num">4</div><div><h3>Enviar para aprovação</h3><p>Clique em <strong>Salvar e enviar</strong>. O Meta analisa em minutos a horas. Status: <span class="tag green">Aprovado</span>, <span class="tag yellow">Pendente</span> ou <span class="tag red">Rejeitado</span>.</p></div></div>
+      </div>
+
+      <h3 class="sub">Boas práticas — evite rejeição</h3>
+      <ul class="list">
+        <li>Não use linguagem de vendas em templates de <strong>Utilidade</strong></li>
+        <li>Seja claro sobre quem está enviando a mensagem</li>
+        <li>Não use URLs encurtadas — use domínios completos</li>
+        <li>Evite: "grátis", "ganhe", "urgente", "clique agora"</li>
+        <li>Certifique-se de que o usuário fez opt-in antes de receber Marketing</li>
+        <li>Use pontuação e gramática corretas</li>
+      </ul>
+    </div>
+    <div class="page-nav">
+      <button onclick="goTo(3)">← Anterior</button>
+      <span class="page-counter">4 de 10</span>
+      <button class="next" onclick="goTo(5)">Próximo →</button>
+    </div>
+  </div>
+
+  <!-- ── PAGE 5: FLUXO ── -->
+  <div class="page" id="page-5">
+    <div class="section-wrap">
+      <div class="section-header">
+        <div class="section-num">05</div>
+        <div>
+          <h2>Construção do Fluxo do Chatbot</h2>
+          <p>Como criar a lógica de conversa usando o Journey Builder do Turn.io.</p>
+        </div>
+      </div>
+
+      <h3 class="sub">Arquitetura de um fluxo</h3>
+      <div class="flow">
+        <div class="flow-step">Gatilho<br/><small style="font-weight:400;font-size:11px;color:var(--text-muted)">keyword / template</small></div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step">Condição<br/><small style="font-weight:400;font-size:11px;color:var(--text-muted)">if / else</small></div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step">Ação<br/><small style="font-weight:400;font-size:11px;color:var(--text-muted)">enviar / salvar</small></div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step">Resposta<br/><small style="font-weight:400;font-size:11px;color:var(--text-muted)">texto / botão</small></div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step">Fim ou<br/>Handoff</div>
+      </div>
+
+      <h3 class="sub">Tipos de nós disponíveis</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Nó</th><th>Para que serve</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Send Message</strong></td><td>Envia texto, imagem, vídeo, documento, botões ou lista ao usuário</td></tr>
+            <tr><td><strong>Ask a Question</strong></td><td>Aguarda resposta do usuário e salva em uma variável</td></tr>
+            <tr><td><strong>Branch</strong></td><td>Divide o fluxo com base em condições (resposta do usuário, valor de variável)</td></tr>
+            <tr><td><strong>Call API</strong></td><td>Faz chamadas HTTP para APIs externas (consultas em sistemas internos)</td></tr>
+            <tr><td><strong>Set Property</strong></td><td>Salva ou atualiza dados do contato no Turn.io</td></tr>
+            <tr><td><strong>Assign Agent</strong></td><td>Transfere a conversa para agente humano ou time</td></tr>
+            <tr><td><strong>Delay</strong></td><td>Aguarda um tempo antes de continuar o fluxo</td></tr>
+            <tr><td><strong>Add Label</strong></td><td>Adiciona etiqueta à conversa para organização e filtros</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="callout info">
+        <span class="callout-icon">ℹ️</span>
+        <div><strong>Variáveis de contato</strong>Use a sintaxe <code>@contact.nome_do_campo</code> para ler e escrever propriedades do contato nos nós de fluxo. Isso permite personalizar mensagens e criar lógica baseada no histórico do usuário.</div>
+      </div>
+
+      <h3 class="sub">Boas práticas</h3>
+      <ul class="list">
+        <li>Sempre inclua uma mensagem de boas-vindas clara com o que o bot consegue fazer</li>
+        <li>Ofereça opção de "falar com atendente" em todo ponto de escolha importante</li>
+        <li>Trate respostas inesperadas — adicione nó de fallback</li>
+        <li>Use botões de resposta rápida sempre que possível (máx. 3 por mensagem)</li>
+        <li>Nomeie os nós de forma descritiva para facilitar manutenção</li>
+        <li>Divida em sub-fluxos por tema: "Menu Principal", "Agendamento", "FAQ"</li>
+      </ul>
+
+      <h3 class="sub">Exemplo: menu principal</h3>
+      <div class="code-block">
+        <div class="code-label">Estrutura de fluxo</div>
+        <pre>
+[Gatilho] Usuário envia qualquer mensagem
+
+[Send Message]
+"Olá! 👋 Sou o assistente virtual.
+O que você precisa?
+
+1️⃣ Informações sobre serviços
+2️⃣ Agendar atendimento
+3️⃣ Falar com atendente"
+
+[Ask Question] → salva em @contact.menu_escolha
+
+[Branch]
+  ├── "1" → fluxo de Informações
+  ├── "2" → fluxo de Agendamento
+  ├── "3" → Assign Agent
+  └── else → "Não entendi. Escolha 1, 2 ou 3."
+        </pre>
+      </div>
+    </div>
+    <div class="page-nav">
+      <button onclick="goTo(4)">← Anterior</button>
+      <span class="page-counter">5 de 10</span>
+      <button class="next" onclick="goTo(6)">Próximo →</button>
+    </div>
+  </div>
+
+  <!-- ── PAGE 6: TESTES ── -->
+  <div class="page" id="page-6">
+    <div class="section-wrap">
+      <div class="section-header">
+        <div class="section-num">06</div>
+        <div>
+          <h2>Testes</h2>
+          <p>Como garantir que o fluxo funciona antes de ir para produção.</p>
+        </div>
+      </div>
+
+      <div class="cards">
+        <div class="card">
+          <div class="card-icon">🔬</div>
+          <h3>Simulador do Turn.io</h3>
+          <p>Disponível no editor de fluxo. Simula a conversa sem enviar mensagens reais. Ideal para testar lógica e ramificações.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">📲</div>
+          <h3>Teste com número real</h3>
+          <p>Use um celular com WhatsApp para enviar mensagens para o número do bot. Testa a experiência completa, incluindo botões e mídias.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">👥</div>
+          <h3>Grupo de teste interno</h3>
+          <p>Monte um grupo de 3–5 pessoas para testar fluxos mais complexos antes do lançamento.</p>
+        </div>
+      </div>
+
+      <h3 class="sub">Checklist de QA antes de publicar</h3>
+      <div class="checklist">
+        <div class="check-item"><div class="check-box"></div><span>Todos os caminhos do fluxo foram percorridos manualmente</span></div>
+        <div class="check-item"><div class="check-box"></div><span>Respostas inesperadas são tratadas com mensagem de fallback</span></div>
+        <div class="check-item"><div class="check-box"></div><span>Botões e listas de opções funcionam corretamente</span></div>
+        <div class="check-item"><div class="check-box"></div><span>Chamadas de API retornam os dados esperados e erros são tratados</span></div>
+        <div class="check-item"><div class="check-box"></div><span>Transferência para agente humano funciona e notifica o agente correto</span></div>
+        <div class="check-item"><div class="check-box"></div><span>Variáveis de contato estão sendo salvas corretamente</span></div>
+        <div class="check-item"><div class="check-box"></div><span>Mídias (imagens, PDFs) abrem corretamente no WhatsApp</span></div>
+        <div class="check-item"><div class="check-box"></div><span>Testado em Android e iOS</span></div>
+      </div>
+    </div>
+    <div class="page-nav">
+      <button onclick="goTo(5)">← Anterior</button>
+      <span class="page-counter">6 de 10</span>
+      <button class="next" onclick="goTo(7)">Próximo →</button>
+    </div>
+  </div>
+
+  <!-- ── PAGE 7: PUBLICAÇÃO ── -->
+  <div class="page" id="page-7">
+    <div class="section-wrap">
+      <div class="section-header">
+        <div class="section-num">07</div>
+        <div>
+          <h2>Publicação e Ativação</h2>
+          <p>Como colocar o chatbot em produção com segurança.</p>
+        </div>
+      </div>
+
+      <div class="steps">
+        <div class="step"><div class="step-num">1</div><div><h3>Revisar o fluxo final</h3><p>Clique em <strong>Preview</strong> para uma última revisão. Certifique-se de que o fluxo está salvo e todos os nós estão conectados.</p></div></div>
+        <div class="step"><div class="step-num">2</div><div><h3>Ativar o fluxo</h3><p>Clique em <strong>Publish</strong>. O fluxo passa de <span class="tag yellow">Draft</span> para <span class="tag green">Active</span>.</p></div></div>
+        <div class="step"><div class="step-num">3</div><div><h3>Associar o fluxo ao gatilho</h3><p>Em <strong>Settings → Automation</strong> da Inbox, configure qual fluxo deve disparar: na primeira mensagem, por palavra-chave, ou ao receber um template específico.</p></div></div>
+        <div class="step"><div class="step-num">4</div><div><h3>Configurar horários e mensagens offline</h3><p>Em <strong>Settings → Business Hours</strong>, defina o horário de funcionamento e configure uma mensagem automática para fora do expediente.</p></div></div>
+        <div class="step"><div class="step-num">5</div><div><h3>Avisar a equipe de atendimento</h3><p>Notifique os agentes que o bot está ativo. Explique quais situações geram handoff e como identificar essas conversas no painel.</p></div></div>
+      </div>
+
+      <div class="callout danger">
+        <span class="callout-icon">🚨</span>
+        <div><strong>Cuidado ao substituir um fluxo ativo</strong>Conversas em andamento continuam no fluxo antigo. Novas conversas usam o fluxo publicado. Evite publicar alterações grandes durante horários de pico.</div>
+      </div>
+    </div>
+    <div class="page-nav">
+      <button onclick="goTo(6)">← Anterior</button>
+      <span class="page-counter">7 de 10</span>
+      <button class="next" onclick="goTo(8)">Próximo →</button>
+    </div>
+  </div>
+
+  <!-- ── PAGE 8: MONITORAMENTO ── -->
+  <div class="page" id="page-8">
+    <div class="section-wrap">
+      <div class="section-header">
+        <div class="section-num">08</div>
+        <div>
+          <h2>Monitoramento e Métricas</h2>
+          <p>Como acompanhar a saúde e o desempenho do chatbot após o lançamento.</p>
+        </div>
+      </div>
+
+      <h3 class="sub">Métricas no Turn.io</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Métrica</th><th>Onde ver</th><th>O que significa</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Conversas abertas</strong></td><td>Dashboard principal</td><td>Quantidade de usuários com conversa ativa no momento</td></tr>
+            <tr><td><strong>Taxa de resolução</strong></td><td>Reports → Overview</td><td>% de conversas encerradas sem precisar de humano</td></tr>
+            <tr><td><strong>Tempo médio de resposta</strong></td><td>Reports → Overview</td><td>Tempo até o usuário receber a primeira resposta</td></tr>
+            <tr><td><strong>Handoffs para humano</strong></td><td>Reports → Agent</td><td>Quantas conversas foram transferidas para atendentes</td></tr>
+            <tr><td><strong>Fluxo analytics</strong></td><td>Journey → Analytics</td><td>Em qual nó os usuários abandonam o fluxo</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3 class="sub">Métricas no Meta Business Manager</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Métrica</th><th>O que monitorar</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Phone Quality Rating</strong></td><td>Deve ficar <span class="tag green">Verde</span>. Amarelo é alerta; Vermelho pode levar à suspensão</td></tr>
+            <tr><td><strong>Messaging Limit</strong></td><td>Limite atual de conversas únicas por dia. Começa em 1.000</td></tr>
+            <tr><td><strong>Template Performance</strong></td><td>Taxa de leitura e botões clicados. Indica se o conteúdo é relevante</td></tr>
+            <tr><td><strong>Blocked / Reported</strong></td><td>Alto índice derruba o Quality Rating e pode suspender o número</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="callout warning">
+        <span class="callout-icon">⚠️</span>
+        <div><strong>Alerta de qualidade</strong>Se o Quality Rating cair para Amarelo, você recebe um e-mail do Meta. Investigue imediatamente qual campanha ou fluxo está gerando bloqueios. Causa mais comum: envio de Marketing para usuários sem opt-in explícito.</div>
+      </div>
+    </div>
+    <div class="page-nav">
+      <button onclick="goTo(7)">← Anterior</button>
+      <span class="page-counter">8 de 10</span>
+      <button class="next" onclick="goTo(9)">Próximo →</button>
+    </div>
+  </div>
+
+  <!-- ── PAGE 9: MANUTENÇÃO ── -->
+  <div class="page" id="page-9">
+    <div class="section-wrap">
+      <div class="section-header">
+        <div class="section-num">09</div>
+        <div>
+          <h2>Manutenção e Iteração</h2>
+          <p>Como evoluir o chatbot sem quebrar o que já está funcionando.</p>
+        </div>
+      </div>
+
+      <div class="cards">
+        <div class="card">
+          <div class="card-icon">✏️</div>
+          <h3>Editar fluxo ativo</h3>
+          <p>Crie um <strong>rascunho (Draft)</strong> para editar sem afetar conversas em andamento. Publique só após testar.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">📦</div>
+          <h3>Versionamento</h3>
+          <p>O Turn.io mantém histórico de versões publicadas. Não há rollback automático — guarde notas do que mudou.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">📋</div>
+          <h3>Atualizar templates</h3>
+          <p>Templates aprovados não podem ser editados. Crie um novo com nome diferente e reenvie para aprovação.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">📈</div>
+          <h3>Escalar limite de envios</h3>
+          <p>O Messaging Tier sobe automaticamente. Mantenha Quality Rating Verde e volume de envio consistente.</p>
+        </div>
+      </div>
+
+      <h3 class="sub">Ciclo de melhoria contínua</h3>
+      <div class="steps">
+        <div class="step"><div class="step-num">📊</div><div><h3>Analisar dados semanalmente</h3><p>Revise onde usuários abandonam o fluxo, quais opções são mais escolhidas, quantos handoffs acontecem.</p></div></div>
+        <div class="step"><div class="step-num">💬</div><div><h3>Coletar feedback dos agentes</h3><p>Os atendentes sabem quais dúvidas chegam para humanos mas que o bot poderia responder. Mapeie esses gaps.</p></div></div>
+        <div class="step"><div class="step-num">🔧</div><div><h3>Iterar no fluxo</h3><p>Priorize melhorias por impacto. Pequenas mudanças em textos e botões podem ter grande efeito na experiência.</p></div></div>
+      </div>
+    </div>
+    <div class="page-nav">
+      <button onclick="goTo(8)">← Anterior</button>
+      <span class="page-counter">9 de 10</span>
+      <button class="next" onclick="goTo(10)">Próximo →</button>
+    </div>
+  </div>
+
+  <!-- ── PAGE 10: RECURSOS ── -->
+  <div class="page" id="page-10">
+    <div class="section-wrap">
+      <div class="section-header">
+        <div class="section-num">10</div>
+        <div>
+          <h2>Recursos e Links de Referência</h2>
+          <p>Onde encontrar documentação atualizada e suporte.</p>
+        </div>
+      </div>
+
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Recurso</th><th>URL</th><th>Para quê</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Turn.io Docs</strong></td><td><code>docs.turn.io</code></td><td>Documentação completa da plataforma</td></tr>
+            <tr><td><strong>Turn.io App</strong></td><td><code>app.turn.io</code></td><td>Acesso à plataforma</td></tr>
+            <tr><td><strong>Meta for Developers</strong></td><td><code>developers.facebook.com/docs/whatsapp</code></td><td>Documentação técnica da WhatsApp API</td></tr>
+            <tr><td><strong>Meta Business Manager</strong></td><td><code>business.facebook.com</code></td><td>Gerenciar WABA, templates, verificação</td></tr>
+            <tr><td><strong>Meta Business Help</strong></td><td><code>business.facebook.com/help</code></td><td>Suporte oficial da Meta</td></tr>
+            <tr><td><strong>Políticas do WhatsApp</strong></td><td><code>whatsapp.com/legal/business-policy</code></td><td>O que pode e não pode ser feito na API</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="callout success">
+        <span class="callout-icon">💡</span>
+        <div><strong>Dica final</strong>Mantenha este manual atualizado! As plataformas mudam com frequência. Sempre que um processo mudar na prática, atualize a seção correspondente. Um manual desatualizado é pior do que nenhum manual.</div>
+      </div>
+
+      <div class="callout info" style="margin-top:8px;">
+        <span class="callout-icon">🎉</span>
+        <div><strong>Você chegou ao fim!</strong>Agora você tem tudo que precisa para criar, publicar e monitorar chatbots no WhatsApp com Turn.io. Em caso de dúvida, consulte as seções específicas pelo menu lateral.</div>
+      </div>
+    </div>
+    <div class="page-nav">
+      <button onclick="goTo(9)">← Anterior</button>
+      <span class="page-counter">10 de 10</span>
+      <button class="next" onclick="goTo(1)">↩ Início</button>
+    </div>
+  </div>
+
+</div><!-- /main -->
+
+<script>
+  const TOTAL = 10;
+  let current = 1;
+
+  function navIndex(pageIndex) {
+    // pages 1-10 map to nav links 0-9
+    return pageIndex - 1;
+  }
+
+  function goTo(index) {
+    document.getElementById('page-' + current).classList.remove('active');
+    document.querySelectorAll('nav a')[navIndex(current)].classList.remove('active');
+
+    current = index;
+    document.getElementById('page-' + current).classList.add('active');
+    document.querySelectorAll('nav a')[navIndex(current)].classList.add('active');
+
+    window.scrollTo(0, 0);
+
+    if (window.innerWidth <= 768) {
+      document.getElementById('sidebar').classList.remove('open');
+    }
+  }
+
+  function toggleSidebar() {
+    document.getElementById('sidebar').classList.toggle('open');
+  }
+
+  // close sidebar when clicking outside on mobile
+  document.addEventListener('click', e => {
+    const sidebar = document.getElementById('sidebar');
+    const toggle = document.getElementById('menu-toggle');
+    if (window.innerWidth <= 768 && !sidebar.contains(e.target) && !toggle.contains(e.target)) {
+      sidebar.classList.remove('open');
+    }
+  });
+</script>
+
+</body>
+</html>
