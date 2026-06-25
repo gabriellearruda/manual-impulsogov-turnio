@@ -126,6 +126,20 @@
       color: #fff;
     }
 
+    .nav-wip {
+      font-size: 8.5px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      background: #f59e0b22;
+      color: #fbbf24;
+      border: 1px solid #f59e0b55;
+      border-radius: 4px;
+      padding: 1px 5px;
+      margin-left: 4px;
+      white-space: nowrap;
+      vertical-align: middle;
+    }
+
     /* ── MOBILE TOGGLE ── */
     #menu-toggle {
       display: none;
@@ -314,6 +328,25 @@
     .card-icon { font-size: 24px; margin-bottom: 10px; }
     .card h3 { font-size: 14px; font-weight: 700; margin-bottom: 6px; }
     .card p  { font-size: 13px; color: var(--text-muted); line-height: 1.5; }
+
+    /* ── VIDEO EMBED ── */
+    .video-embed {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      background: #000;
+      margin-bottom: 28px;
+    }
+    .video-embed iframe {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
 
     /* ── ACCORDION ── */
     .accordion { display: flex; flex-direction: column; gap: 12px; margin-bottom: 28px; }
@@ -666,17 +699,17 @@
   <nav id="nav">
     <div class="nav-section-title">Fundamentos</div>
     <a onclick="goTo(1)"><span class="nav-num">01</span> Conceitos Fundamentais</a>
-    <a onclick="goTo(2)"><span class="nav-num">02</span> Fluxograma e Contatos</a>
+    <a onclick="goTo(2)"><span class="nav-num">02</span> Fluxograma e Contatos <span class="nav-wip">EM CONSTRUÇÃO</span></a>
 
     <div class="nav-section-title">Configuração</div>
-    <a onclick="goTo(3)"><span class="nav-num">03</span> Setup no Turn.io</a>
-    <a onclick="goTo(4)"><span class="nav-num">04</span> Templates de Mensagem</a>
+    <a onclick="goTo(3)"><span class="nav-num">03</span> Setup no Turn.io <span class="nav-wip">EM CONSTRUÇÃO</span></a>
+    <a onclick="goTo(4)"><span class="nav-num">04</span> Templates de Mensagem <span class="nav-wip">EM CONSTRUÇÃO</span></a>
 
     <div class="nav-section-title">Desenvolvimento</div>
-    <a onclick="goTo(5)"><span class="nav-num">05</span> Construção do Fluxo</a>
+    <a onclick="goTo(5)"><span class="nav-num">05</span> Construção do Fluxo <span class="nav-wip">EM CONSTRUÇÃO</span></a>
 
     <div class="nav-section-title">Produção</div>
-    <a onclick="goTo(6)"><span class="nav-num">06</span> Publicação</a>
+    <a onclick="goTo(6)"><span class="nav-num">06</span> Publicação <span class="nav-wip">EM CONSTRUÇÃO</span></a>
     <a onclick="goTo(7)"><span class="nav-num">07</span> Monitoramento</a>
 
     <div class="nav-section-title">Referências</div>
@@ -729,6 +762,11 @@
           <h3>Meta Business Manager</h3>
           <p>Plataforma da Meta onde ficam as configurações da conta, aprovações e compliance.</p>
         </div>
+      </div>
+
+      <h3 class="sub">Vídeo de introdução</h3>
+      <div class="video-embed">
+        <iframe src="https://www.youtube.com/embed/VIDEO_ID" title="Vídeo de introdução" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
       </div>
 
       <h3 class="sub">Glossário essencial</h3>
