@@ -1,4 +1,4 @@
-const TOTAL = 7;
+const TOTAL = 6;
 let current = 1;
 
 function navIndex(pageIndex) {
