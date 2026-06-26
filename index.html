@@ -105,6 +105,7 @@
       <div class="glossary-item"><span class="glossary-term">Inbox (Turn.io)</span><span class="glossary-def">Canal de comunicação no Turn.io. Cada número de telefone corresponde a uma Inbox.</span></div>
       <div class="glossary-item"><span class="glossary-term">Journey / Flow</span><span class="glossary-def">Fluxo automatizado construído no Turn.io. Define a lógica de respostas do chatbot. <strong>Cada número de telefone tem suas próprias jornadas</strong> — os fluxos criados para um número não aparecem nem interferem nos demais. Isso permite que números diferentes tenham experiências de conversa completamente independentes.</span></div>
       <div class="glossary-item"><span class="glossary-term">Messaging Tier</span><span class="glossary-def">Limite de mensagens por dia. Começa em 1.000 e sobe automaticamente com uso e boa qualidade.</span></div>
+      <div class="glossary-item"><span class="glossary-term">Token</span><span class="glossary-def">Credencial de autenticação necessária para que o Turn.io possa enviar mensagens em nome de um número. Sem um token válido e ativo, nenhuma mensagem pode ser enviada. A renovação dos tokens é automatizada pela equipe de engenharia — mas se um token for desativado manualmente ou expirar de forma inesperada, o envio de mensagens daquele número é interrompido imediatamente até que seja reativado.</span></div>
       <div class="glossary-item" style="border:none"><span class="glossary-term">Phone Quality Rating</span><span class="glossary-def">Avaliação do número pelo Meta (Verde/Amarelo/Vermelho). Impacta limites e pode levar à suspensão.</span></div>
 
       <h3 class="sub">WABAs atuais</h3>
@@ -113,6 +114,21 @@
         Cada WABA agrupa os números de telefone usados nos diferentes projetos e chatbots. 
         Cada WABA tem um nome de projeto e um ID.
         Mais detalhes abaixo.</p>
+
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Nome da WABA</th><th>Descrição</th></tr></thead>
+          <tbody>
+            <tr><td>ImpulsoGov</td><td>WABA principal com todos os números de mensgaeria.</td></tr>
+            <tr><td>Impulso Gov</td><td>Vazio, criado quando iriamos separar o número da Impulso o que não fizemos por conta do fee waiver. Pode ser apagado.</td></tr>
+            <tr><td>ImpulsoGov - Mensageria</td><td>WABA extra criado quando o principal estava cheio. Quando acabar a transferência de números, pode ser apagado.</td></tr>
+            <tr><td>ImpulsoGov - Mensageria II</td><td>Criado quando o WABA extra ficou cheio também. Pode ser apagado.</td></tr>
+            <tr><td>Mensageria para o Cidadão</td><td>Projeto na Twilio com os 4 municipios do piloto. Números devem seguir para a TurnIO.</td></tr>
+            <tr><td>ImpulsoGov - Mensageria para o Cidadão - Projeto Afluentes</td><td>Inicialmente criado para ter uma area só para o afluentes, mas desligamos para ter acesso ao fee waiver do outro WABA. Pode ser apagado.</td></tr>
+            <tr><td>ImpulsoGov - Pesquisa Saúde Mental</td><td>Projeto para a pesquisa de Saúde Mental.</td></tr>
+          </tbody>
+        </table>
+      </div>
 
       <h3 class="sub">Plano da Turn.io</h3>
       <div class="callout info">
@@ -154,12 +170,14 @@
             <span class="acc-icon">📞</span>
             <span class="acc-text">
               <h3>2. Números de telefone</h3>
-              <p>Todos os números adicionais nos WABAs "ImpulsoGov" e "ImpulsoGov · Mensageria" têm custo associado, que deveria ser de 120 doláres anuais. Para mais informações consultar João Abreu. O WABA de Saúde Mental tem o preço padrão da plataforma</p>
+              <p>Cobrança por cada número adicional</p>
             </span>
             <span class="acc-chevron">▼</span>
           </summary>
           <div class="acc-body">
-            <p class="body">Quanto mais números a organização mantém ativos, maior essa parcela do custo. Cada número opera de forma independente dentro da WABA — com suas próprias jornadas, perfil e métricas.</p>
+            <p class="body">
+              Todos os números adicionais nos WABAs "ImpulsoGov" e "ImpulsoGov · Mensageria" têm custo associado, que deveria ser de 120 doláres anuais. Para mais informações consultar João Abreu. O WABA de Saúde Mental tem o preço padrão da plataforma
+            </p>
           </div>
         </details>
 
@@ -257,6 +275,9 @@
         </div>
       </div>
 
+      <div class="video-embed">
+        <iframe src="https://www.youtube.com/embed/VIDEO_ID_FLUXO" title="Vídeo: Fluxograma e Pontos de Contato" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+      </div>
     </div>
     <div class="page-nav">
       <button onclick="goTo(1)">← Anterior</button>
@@ -272,36 +293,59 @@
         <div class="section-num">03</div>
         <div>
           <h2>Configuração Inicial no Turn.io</h2>
-          <p>Primeiros passos após ter acesso à plataforma.</p>
+          <p>Como adicionar um novo número e configurar uma Inbox do zero.</p>
         </div>
       </div>
 
+      <div class="callout info">
+        <span class="callout-icon">ℹ️</span>
+        <div><strong>Contexto ImpulsoGov</strong>A ImpulsoGov já tem workspaces ativos no Turn.io vinculados às WABAs da organização. Esta página descreve o processo para <strong>adicionar um novo número</strong> a um workspace existente — não a criação de uma conta do zero.</div>
+      </div>
+
+      <h3 class="sub">1. Acessar o workspace correto</h3>
+      <p class="body">Entre em <a href="https://app.turn.io" target="_blank">app.turn.io</a> com sua conta institucional. A ImpulsoGov tem mais de um workspace — confirme que está no correto antes de qualquer ação. O nome do workspace aparece no canto superior esquerdo da tela.</p>
+
+      <div class="callout warning">
+        <span class="callout-icon">⚠️</span>
+        <div><strong>Workspace errado = número errado</strong>Cada workspace corresponde a uma WABA diferente. Criar uma Inbox no workspace errado vincula o número à WABA errada, o que afeta cobrança, permissões e rastreabilidade.</div>
+      </div>
+
+      <h3 class="sub">2. Criar uma nova Inbox</h3>
+      <p class="body">Cada número de telefone no Turn.io é representado por uma <strong>Inbox</strong>. Para adicionar um novo número:</p>
       <div class="steps">
         <div class="step">
           <div class="step-num">1</div>
-          <div><h3>Acessar o workspace</h3><p>Entre em <code>app.turn.io</code> com sua conta. Confirme que está no workspace correto da organização (nome visível no canto superior esquerdo).</p></div>
+          <div><h3>Abrir configurações</h3><p>Vá em <strong>Settings → Inboxes → + New Inbox</strong> e selecione <strong>WhatsApp</strong>.</p></div>
         </div>
         <div class="step">
           <div class="step-num">2</div>
-          <div><h3>Verificar ou criar uma Inbox</h3><p>Vá em <strong>Settings → Inboxes</strong>. Cada Inbox representa um número/canal. Para criar uma nova, clique em <strong>+ New Inbox</strong> e selecione <strong>WhatsApp</strong>.</p></div>
+          <div><h3>Embedded Signup</h3><p>O Turn.io abre um fluxo do Facebook (Embedded Signup) para autorizar o número na WABA. Você precisará de acesso de administrador ao <strong>Meta Business Manager</strong>. O número <strong>não pode estar ativo em nenhum aplicativo WhatsApp</strong> neste momento — se estiver, remova primeiro.</p></div>
         </div>
         <div class="step">
           <div class="step-num">3</div>
-          <div><h3>Vincular o número ao Meta</h3><p>O Turn.io vai guiar pelo processo de <strong>Embedded Signup</strong> — um fluxo do Facebook para autorizar o número. Tenha o acesso ao Meta Business Manager em mãos. O número não pode estar ativo em nenhum app do WhatsApp durante esse processo.</p></div>
+          <div><h3>Verificar o número</h3><p>A Meta envia um código de verificação via SMS ou chamada para o número. Insira o código no fluxo. Após confirmação, o número fica vinculado à WABA e aparece na Inbox.</p></div>
         </div>
         <div class="step">
           <div class="step-num">4</div>
-          <div><h3>Configurar o perfil do WhatsApp Business</h3><p>Em <strong>Settings → Profile</strong>, configure: nome de exibição, descrição, foto de perfil, e-mail, site e horário. Essas informações aparecem para os usuários no WhatsApp.</p></div>
+          <div><h3>Configurar o perfil da Inbox</h3><p>Em <strong>Settings → Profile</strong> da Inbox, preencha: nome de exibição, descrição, foto de perfil, e-mail e site. Essas informações aparecem para os usuários quando abrem o contato no WhatsApp.</p></div>
         </div>
         <div class="step">
           <div class="step-num">5</div>
-          <div><h3>Configurar agentes e times</h3><p>Em <strong>Settings → Agents</strong>, adicione os membros que vão atender conversas. Em <strong>Teams</strong>, agrupe agentes por assunto para facilitar o roteamento.</p></div>
+          <div><h3>Adicionar agentes e times</h3><p>Em <strong>Settings → Agents</strong>, adicione quem vai monitorar e atender conversas nesta Inbox. Em <strong>Teams</strong>, agrupe agentes por função ou projeto para facilitar o roteamento de handoffs.</p></div>
         </div>
       </div>
 
+      <h3 class="sub">3. Validar a configuração</h3>
       <div class="callout success">
         <span class="callout-icon">✅</span>
-        <div><strong>Como saber se funcionou</strong>Envie uma mensagem de teste para o número vinculado. Ela deve aparecer na Inbox do Turn.io em até 2 minutos. Se não aparecer, verifique o webhook em <strong>Settings → Integrations</strong>.</div>
+        <div><strong>Teste antes de ir para produção</strong>Envie uma mensagem de teste para o número recém-configurado. Ela deve aparecer na Inbox do Turn.io em até 2 minutos. Se não aparecer, verifique se o webhook está ativo em <strong>Settings → Integrations</strong> e se o token está válido.</div>
+      </div>
+
+      <h3 class="sub">4. Atenção ao Token</h3>
+      <p class="body">Cada Inbox depende de um <strong>token de autenticação</strong> para funcionar. A renovação é automatizada, mas se o token for desativado ou expirar de forma inesperada, o envio de mensagens é bloqueado imediatamente. Em caso de falha de envio sem causa aparente, verifique o status do token em <strong>Settings → Integrations → WhatsApp</strong>.</p>
+
+      <div class="video-embed">
+        <iframe src="https://www.youtube.com/embed/VIDEO_ID_SETUP" title="Vídeo: Configuração no Turn.io" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
       </div>
     </div>
     <div class="page-nav">
@@ -404,6 +448,9 @@ O que você precisa?
       <div class="callout danger">
         <span class="callout-icon">🚨</span>
         <div><strong>Cuidado ao substituir um fluxo ativo</strong>Conversas em andamento continuam no fluxo antigo. Novas conversas usam o fluxo publicado. Evite publicar alterações grandes durante horários de pico.</div>
+      </div>
+      <div class="video-embed">
+        <iframe src="https://www.youtube.com/embed/VIDEO_ID_CONSTRUCAO" title="Vídeo: Construção do Fluxo" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
       </div>
     </div>
     <div class="page-nav">
