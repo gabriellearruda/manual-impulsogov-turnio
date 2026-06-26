@@ -33,17 +33,16 @@
 
     <div class="nav-section-title">Configuração</div>
     <a onclick="goTo(3)"><span class="nav-num">03</span> Setup no Turn.io <span class="nav-wip">EM CONSTRUÇÃO</span></a>
-    <a onclick="goTo(4)"><span class="nav-num">04</span> Templates de Mensagem <span class="nav-wip">EM CONSTRUÇÃO</span></a>
 
     <div class="nav-section-title">Desenvolvimento</div>
-    <a onclick="goTo(5)"><span class="nav-num">05</span> Construção do Fluxo <span class="nav-wip">EM CONSTRUÇÃO</span></a>
+    <a onclick="goTo(4)"><span class="nav-num">04</span> Construção do Fluxo <span class="nav-wip">EM CONSTRUÇÃO</span></a>
 
     <div class="nav-section-title">Produção</div>
-    <a onclick="goTo(6)"><span class="nav-num">06</span> Publicação <span class="nav-wip">EM CONSTRUÇÃO</span></a>
-    <a onclick="goTo(7)"><span class="nav-num">07</span> Monitoramento</a>
+    <a onclick="goTo(5)"><span class="nav-num">05</span> Publicação <span class="nav-wip">EM CONSTRUÇÃO</span></a>
+    <a onclick="goTo(6)"><span class="nav-num">06</span> Monitoramento</a>
 
     <div class="nav-section-title">Referências</div>
-    <a onclick="goTo(8)"><span class="nav-num">08</span> Recursos e Links</a>
+    <a onclick="goTo(7)"><span class="nav-num">07</span> Recursos e Links</a>
   </nav>
 </aside>
 
@@ -116,13 +115,13 @@
         Cada WABA tem um nome de projeto e um ID.
         Mais detalhes abaixo.</p>
 
-      <h3 class="sub">Contrato com a Turn.io</h3>
-      <p class="body">Detalhes sobre o contrato não estão públicos neste manual.
-        Informações sobre o contrato, fale com <strong style="white-space:nowrap">João Abreu</strong>, responsável que assinou o contrato, ou a responsável de parcerias na <strong>gestão interna</strong>, que detem todos os registros.
-      </p>
+      <h3 class="sub">Plano da Turn.io</h3>
+      <div class="callout info">
+        <span class="callout-icon">ℹ️</span>
+        <p>Detalhes sobre o contrato não estão públicos neste manual. Informações sobre o contrato, fale com <strong style="white-space:nowrap">João Abreu</strong>, responsável que assinou o contrato, ou a responsável de parcerias na <strong>gestão interna</strong>, que detém todos os registros.</p>
+      </div>
 
-      <h3 class="sub">Sistema de pagamento</h3>
-      <p class="body">O custo total é composto por <strong>três cobranças distintas</strong>, que se somam. Clique em cada uma para ver os detalhes.</p>
+      <p class="body">Quando ao sistema de pagamento ele é composto por <strong>três cobranças distintas</strong>, que se somam. Clique em cada uma para ver os detalhes.</p>
 
       <div class="accordion">
         <details>
@@ -135,15 +134,16 @@
             <span class="acc-chevron">▼</span>
           </summary>
           <div class="acc-body">
-            <p class="body">Cada plano (<code>enterprise_subscription</code>, <code>pro_subscription</code> etc.) é cobrado de forma recorrente e dá acesso à plataforma. As assinaturas ativas hoje são:</p>
+            <p class="body">
+              Cada plano é cobrado mensalmente, outros projetos já foram criados mas não continuados, os projetos e planos ativos hoje são:
+            </p>
             <div class="table-wrap">
               <table>
-                <thead><tr><th>Plano</th><th>Referência</th></tr></thead>
+                <thead><tr><th>WABA Nome</th><th>Plano</th><th>Descrição</th><th>Fee Waiver</th></tr></thead>
                 <tbody>
-                  <tr><td><code>enterprise_subscription</code></td><td>Plano principal da plataforma</td></tr>
-                  <tr><td><code>enterprise_subscription</code></td><td>WABA ImpulsoGov</td></tr>
-                  <tr><td><code>pro_subscription</code></td><td>ImpulsoGov · Pesquisa Saúde Mental</td></tr>
-                  <tr><td><code>enterprise_subscription</code></td><td>WABA ImpulsoGov · Mensageria</td></tr>
+                  <tr><td>ImpulsoGov</td><td><code>enterprise_subscription</code></td><td>Assinatura base do workspace Turn.io da ImpulsoGov. Por padrão vem com um número mas na nossa negociação inicial ficamos com 14 gratuitos, os outros foram adicionados com um valor a mais.</td><td>✅</td></tr>
+                  <tr><td>ImpulsoGov · Mensageria</td><td><code>-</code></td><td>Esse WABA foi criado quando atingimos o teto de 120 inicialmente (não mais existente) para dar vazão aos outros números necessários. Sem outro propósito. Pela <a href="https://impulsogov.slack.com/archives/C05LBADGEE9/p1761930185810979?thread_ts=1759953481.862219&cid=C05LBADGEE9" target="_blank">negociação com Gustav (CEO Turn)</a> ele não deve ter assinatura cobrada.</td><td>❌</td></tr>
+                  <tr><td>ImpulsoGov · Pesquisa Saúde Mental</td><td><code>pro_subscription</code></td><td>WABA da pesquisa de saúde mental.</td><td>❌</td></tr>
                 </tbody>
               </table>
             </div>
@@ -155,7 +155,7 @@
             <span class="acc-icon">📞</span>
             <span class="acc-text">
               <h3>2. Números de telefone</h3>
-              <p>Cada número de telefone ativo dentro de uma WABA pode ter um custo associado.</p>
+              <p>Todos os números adicionais nos WABAs "ImpulsoGov" e "ImpulsoGov · Mensageria" têm custo associado, que deveria ser de 120 doláres anuais. Para mais informações consultar João Abreu. O WABA de Saúde Mental tem o preço padrão da plataforma</p>
             </span>
             <span class="acc-chevron">▼</span>
           </summary>
@@ -219,7 +219,7 @@
     </div>
     <div class="page-nav">
       <button disabled>← Anterior</button>
-      <span class="page-counter">1 de 8</span>
+      <span class="page-counter">1 de 7</span>
       <button class="next" onclick="goTo(2)">Próximo →</button>
     </div>
   </div>
@@ -231,44 +231,28 @@
         <div class="section-num">02</div>
         <div>
           <h2>Fluxograma e Pontos de Contato</h2>
-          <p>O que você precisa ter antes de começar e com quem falar.</p>
+          <p>Como funciona o controle do fluxo da Turn e com quem falar.</p>
         </div>
-      </div>
-
-      <div class="callout warning">
-        <span class="callout-icon">⚠️</span>
-        <div><strong>Atenção ao prazo</strong>A verificação da empresa no Meta pode levar de 1 a 5 dias úteis. Inicie esse processo com antecedência.</div>
-      </div>
-
-      <h3 class="sub">Checklist de pré-requisitos</h3>
-      <div class="checklist">
-        <div class="check-item"><div class="check-box"></div><span>Acesso ao <strong>Meta Business Manager</strong> da empresa</span></div>
-        <div class="check-item"><div class="check-box"></div><span>Acesso ao <strong>Turn.io</strong> (workspace da organização)</span></div>
-        <div class="check-item"><div class="check-box"></div><span><strong>Número de telefone</strong> dedicado — não pode estar vinculado a outro app WhatsApp</span></div>
-        <div class="check-item"><div class="check-box"></div><span>Empresa <strong>verificada no Meta</strong> (necessário para aumento de limites)</span></div>
-        <div class="check-item"><div class="check-box"></div><span>Objetivo e <strong>fluxo do chatbot</strong> definidos antes de começar</span></div>
-        <div class="check-item"><div class="check-box"></div><span>Textos dos <strong>templates</strong> redigidos e aprovados internamente</span></div>
       </div>
 
       <h3 class="sub">Pontos de contato</h3>
       <div class="contacts">
         <div class="contact-card">
-          <div class="avatar">TI</div>
-          <h3>Equipe interna (TI/Produto)</h3>
-          <span class="role">Acesso ao Meta Business Manager e Turn.io</span>
-          <p style="font-size:13px;color:var(--text-muted);margin-top:4px;">Solicitar acesso, criar usuários e gerenciar permissões.</p>
+          <div class="avatar">EI</div>
+          <h3>Equipe interna</h3>
+          <p style="font-size:13px;color:var(--text-muted);margin-top:4px;">
+            Para questões na Meta Business Manager, criar usuários e gerenciar permissões.</p>
         </div>
         <div class="contact-card">
           <div class="avatar">T</div>
           <h3>Suporte Turn.io</h3>
           <span class="role">BSP / Provedor</span>
-          <a href="mailto:support@turn.io">support@turn.io</a>
-          <a href="https://whatsapp.turn.io" target="_blank">whatsapp.turn.io</a>
+          <p style="font-size:13px;color:var(--text-muted);margin-top:4px;">
+            Suporte no slack pelo canal #shared-turn-impulso. Nosso suporte é com a Raquel Graça atualmente e em casos mais estratégicos sobe para o Vitor Cairoli. Grupo no whatsapp não é mais utilizado.</p>
         </div>
         <div class="contact-card">
           <div class="avatar">M</div>
           <h3>Suporte Meta</h3>
-          <span class="role">Aprovações, suspensões, verificação</span>
           <a href="https://business.facebook.com/help" target="_blank">business.facebook.com/help</a>
           <p style="font-size:12px;color:var(--text-muted);margin-top:6px;line-height:1.5;">Não temos contato direto com a Meta fora do suporte oficial. Para assuntos estratégicos, <strong>João Abreu</strong> possui o contato da Head da Meta LATAM.</p>
         </div>
@@ -277,7 +261,7 @@
     </div>
     <div class="page-nav">
       <button onclick="goTo(1)">← Anterior</button>
-      <span class="page-counter">2 de 8</span>
+      <span class="page-counter">2 de 7</span>
       <button class="next" onclick="goTo(3)">Próximo →</button>
     </div>
   </div>
@@ -323,69 +307,16 @@
     </div>
     <div class="page-nav">
       <button onclick="goTo(2)">← Anterior</button>
-      <span class="page-counter">3 de 8</span>
+      <span class="page-counter">3 de 7</span>
       <button class="next" onclick="goTo(4)">Próximo →</button>
     </div>
   </div>
 
-  <!-- ── PAGE 4: TEMPLATES ── -->
+  <!-- ── PAGE 4: FLUXO ── -->
   <div class="page" id="page-4">
     <div class="section-wrap">
       <div class="section-header">
         <div class="section-num">04</div>
-        <div>
-          <h2>Templates de Mensagem (HSM)</h2>
-          <p>Como criar, enviar para aprovação e usar mensagens pré-aprovadas pelo Meta.</p>
-        </div>
-      </div>
-
-      <div class="callout warning">
-        <span class="callout-icon">⚠️</span>
-        <div><strong>Templates são obrigatórios fora da janela de 24h</strong>Para iniciar conversas ou reengajar usuários, use sempre um template aprovado.</div>
-      </div>
-
-      <h3 class="sub">Categorias de templates</h3>
-      <div class="table-wrap">
-        <table>
-          <thead><tr><th>Categoria</th><th>Uso</th><th>Exemplos</th><th>Aprovação</th></tr></thead>
-          <tbody>
-            <tr><td><span class="tag green">Marketing</span></td><td>Promoções, novidades, engajamento</td><td>Lançamento de serviço, convite para evento</td><td>Mais rigorosa</td></tr>
-            <tr><td><span class="tag blue">Utilidade</span></td><td>Atualizações transacionais de opt-in</td><td>Confirmação de cadastro, resultado de exame</td><td>Moderada</td></tr>
-            <tr><td><span class="tag purple">Autenticação</span></td><td>Códigos de verificação (OTP)</td><td>Código de acesso, verificação de conta</td><td>Alta (estrutura fixa)</td></tr>
-          </tbody>
-        </table>
-      </div>
-
-      <h3 class="sub">Como criar um template</h3>
-      <div class="steps">
-        <div class="step"><div class="step-num">1</div><div><h3>Acessar o gerenciador</h3><p>No Turn.io: <strong>Settings → Message Templates</strong>. Ou no Meta Business Manager em <strong>Conta do WhatsApp → Modelos de mensagem</strong>.</p></div></div>
-        <div class="step"><div class="step-num">2</div><div><h3>Escolher categoria e idioma</h3><p>Selecione a categoria mais adequada. Use <code>pt_BR</code> para português do Brasil.</p></div></div>
-        <div class="step"><div class="step-num">3</div><div><h3>Redigir o corpo da mensagem</h3><p>Use variáveis com <code>{{1}}</code>, <code>{{2}}</code> para conteúdo dinâmico. Ex: <em>"Olá, {{1}}! Seu protocolo é {{2}}."</em>. Você pode adicionar cabeçalho, rodapé e botões.</p></div></div>
-        <div class="step"><div class="step-num">4</div><div><h3>Enviar para aprovação</h3><p>Clique em <strong>Salvar e enviar</strong>. O Meta analisa em minutos a horas. Status: <span class="tag green">Aprovado</span>, <span class="tag yellow">Pendente</span> ou <span class="tag red">Rejeitado</span>.</p></div></div>
-      </div>
-
-      <h3 class="sub">Boas práticas — evite rejeição</h3>
-      <ul class="list">
-        <li>Não use linguagem de vendas em templates de <strong>Utilidade</strong></li>
-        <li>Seja claro sobre quem está enviando a mensagem</li>
-        <li>Não use URLs encurtadas — use domínios completos</li>
-        <li>Evite: "grátis", "ganhe", "urgente", "clique agora"</li>
-        <li>Certifique-se de que o usuário fez opt-in antes de receber Marketing</li>
-        <li>Use pontuação e gramática corretas</li>
-      </ul>
-    </div>
-    <div class="page-nav">
-      <button onclick="goTo(3)">← Anterior</button>
-      <span class="page-counter">4 de 8</span>
-      <button class="next" onclick="goTo(5)">Próximo →</button>
-    </div>
-  </div>
-
-  <!-- ── PAGE 5: FLUXO ── -->
-  <div class="page" id="page-5">
-    <div class="section-wrap">
-      <div class="section-header">
-        <div class="section-num">05</div>
         <div>
           <h2>Construção do Fluxo do Chatbot</h2>
           <p>Como criar a lógica de conversa usando o Journey Builder do Turn.io.</p>
@@ -462,17 +393,17 @@ O que você precisa?
       </div>
     </div>
     <div class="page-nav">
-      <button onclick="goTo(4)">← Anterior</button>
-      <span class="page-counter">5 de 8</span>
-      <button class="next" onclick="goTo(6)">Próximo →</button>
+      <button onclick="goTo(3)">← Anterior</button>
+      <span class="page-counter">4 de 7</span>
+      <button class="next" onclick="goTo(5)">Próximo →</button>
     </div>
   </div>
 
-  <!-- ── PAGE 6: PUBLICAÇÃO ── -->
-  <div class="page" id="page-6">
+  <!-- ── PAGE 5: PUBLICAÇÃO ── -->
+  <div class="page" id="page-5">
     <div class="section-wrap">
       <div class="section-header">
-        <div class="section-num">06</div>
+        <div class="section-num">05</div>
         <div>
           <h2>Publicação e Ativação</h2>
           <p>Como colocar o chatbot em produção com segurança.</p>
@@ -493,17 +424,17 @@ O que você precisa?
       </div>
     </div>
     <div class="page-nav">
-      <button onclick="goTo(5)">← Anterior</button>
-      <span class="page-counter">6 de 8</span>
-      <button class="next" onclick="goTo(7)">Próximo →</button>
+      <button onclick="goTo(4)">← Anterior</button>
+      <span class="page-counter">5 de 7</span>
+      <button class="next" onclick="goTo(6)">Próximo →</button>
     </div>
   </div>
 
-  <!-- ── PAGE 7: MONITORAMENTO ── -->
-  <div class="page" id="page-7">
+  <!-- ── PAGE 6: MONITORAMENTO ── -->
+  <div class="page" id="page-6">
     <div class="section-wrap">
       <div class="section-header">
-        <div class="section-num">07</div>
+        <div class="section-num">06</div>
         <div>
           <h2>Monitoramento e Métricas</h2>
           <p>Como acompanhar a saúde e o desempenho do chatbot após o lançamento.</p>
@@ -533,7 +464,6 @@ O que você precisa?
         <span class="callout-icon">⚠️</span>
         <div><strong>Alerta de qualidade</strong>Se o Quality Rating cair para Amarelo, você recebe um e-mail do Meta. Investigue imediatamente qual campanha ou fluxo está gerando bloqueios. Causa mais comum: mensagem de citopatológico sendo denunciada.</div>
       </div>
-    </div>
       <div class="table-wrap">
         <table>
           <thead><tr><th>Métrica</th><th>O que monitorar</th></tr></thead>
@@ -545,18 +475,19 @@ O que você precisa?
           </tbody>
         </table>
       </div>
+    </div>
     <div class="page-nav">
-      <button onclick="goTo(6)">← Anterior</button>
-      <span class="page-counter">7 de 8</span>
-      <button class="next" onclick="goTo(8)">Próximo →</button>
+      <button onclick="goTo(5)">← Anterior</button>
+      <span class="page-counter">6 de 7</span>
+      <button class="next" onclick="goTo(7)">Próximo →</button>
     </div>
   </div>
 
-  <!-- ── PAGE 8: RECURSOS ── -->
-  <div class="page" id="page-8">
+  <!-- ── PAGE 7: RECURSOS ── -->
+  <div class="page" id="page-7">
     <div class="section-wrap">
       <div class="section-header">
-        <div class="section-num">08</div>
+        <div class="section-num">07</div>
         <div>
           <h2>Recursos e Links de Referência</h2>
           <p>Onde encontrar documentação atualizada e suporte.</p>
@@ -573,14 +504,15 @@ O que você precisa?
             <tr><td><strong>Meta Business Manager</strong></td><td><a href="https://business.facebook.com" target="_blank">business.facebook.com</a></td><td>Gerenciar WABA, templates, verificação</td></tr>
             <tr><td><strong>Meta Business Help</strong></td><td><a href="https://www.facebook.com/business/help" target="_blank">facebook.com/business/help</a></td><td>Suporte oficial da Meta</td></tr>
             <tr><td><strong>Políticas do WhatsApp</strong></td><td><a href="https://www.whatsapp.com/legal/business-policy" target="_blank">whatsapp.com/legal/business-policy</a></td><td>O que pode e não pode ser feito na API</td></tr>
+            <tr><td><strong>Playlist: Como usar o Turn.io</strong></td><td><a href="https://www.youtube.com/watch?v=YGlhzhufNpA&list=PLqXRjkiFo3NA636Gp9SR5MwzjWq0EWHkh" target="_blank">youtube.com · playlist Turn.io</a></td><td>Série de vídeos oficiais sobre uso da plataforma</td></tr>
           </tbody>
         </table>
       </div>
 
     </div>
     <div class="page-nav">
-      <button onclick="goTo(7)">← Anterior</button>
-      <span class="page-counter">8 de 8</span>
+      <button onclick="goTo(6)">← Anterior</button>
+      <span class="page-counter">7 de 7</span>
       <button class="next" onclick="goTo(1)">↩ Início</button>
     </div>
   </div>

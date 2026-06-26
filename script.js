@@ -1,8 +1,7 @@
-const TOTAL = 8;
+const TOTAL = 7;
 let current = 1;
 
 function navIndex(pageIndex) {
-  // pages 1-8 map to nav links 0-7
   return pageIndex - 1;
 }
 
