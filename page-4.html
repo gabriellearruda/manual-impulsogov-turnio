@@ -1,0 +1,103 @@
+  <div class="page" id="page-4">
+    <div class="section-wrap">
+      <div class="section-header">
+        <div class="section-num">04</div>
+        <div>
+          <h2>Construção do Fluxo do Chatbot</h2>
+          <p>Como criar a lógica de conversa usando o Journey Builder do Turn.io.</p>
+        </div>
+      </div>
+
+      <h3 class="sub">Arquitetura de um fluxo</h3>
+      <div class="flow">
+        <div class="flow-step">Gatilho<br/><small style="font-weight:400;font-size:11px;color:var(--text-muted)">keyword / template</small></div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step">Condição<br/><small style="font-weight:400;font-size:11px;color:var(--text-muted)">if / else</small></div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step">Ação<br/><small style="font-weight:400;font-size:11px;color:var(--text-muted)">enviar / salvar</small></div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step">Resposta<br/><small style="font-weight:400;font-size:11px;color:var(--text-muted)">texto / botão</small></div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step">Fim ou<br/>Handoff</div>
+      </div>
+
+      <h3 class="sub">Tipos de nós disponíveis</h3>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Nó</th><th>Para que serve</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Send Message</strong></td><td>Envia texto, imagem, vídeo, documento, botões ou lista ao usuário</td></tr>
+            <tr><td><strong>Ask a Question</strong></td><td>Aguarda resposta do usuário e salva em uma variável</td></tr>
+            <tr><td><strong>Branch</strong></td><td>Divide o fluxo com base em condições (resposta do usuário, valor de variável)</td></tr>
+            <tr><td><strong>Call API</strong></td><td>Faz chamadas HTTP para APIs externas (consultas em sistemas internos)</td></tr>
+            <tr><td><strong>Set Property</strong></td><td>Salva ou atualiza dados do contato no Turn.io</td></tr>
+            <tr><td><strong>Assign Agent</strong></td><td>Transfere a conversa para agente humano ou time</td></tr>
+            <tr><td><strong>Delay</strong></td><td>Aguarda um tempo antes de continuar o fluxo</td></tr>
+            <tr><td><strong>Add Label</strong></td><td>Adiciona etiqueta à conversa para organização e filtros</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="callout info">
+        <span class="callout-icon">ℹ️</span>
+        <div><strong>Variáveis de contato</strong>Use a sintaxe <code>@contact.nome_do_campo</code> para ler e escrever propriedades do contato nos nós de fluxo. Isso permite personalizar mensagens e criar lógica baseada no histórico do usuário.</div>
+      </div>
+
+      <h3 class="sub">Boas práticas</h3>
+      <ul class="list">
+        <li>Sempre inclua uma mensagem de boas-vindas clara com o que o bot consegue fazer</li>
+        <li>Ofereça opção de "falar com atendente" em todo ponto de escolha importante</li>
+        <li>Trate respostas inesperadas — adicione nó de fallback</li>
+        <li>Use botões de resposta rápida sempre que possível (máx. 3 por mensagem)</li>
+        <li>Nomeie os nós de forma descritiva para facilitar manutenção</li>
+        <li>Divida em sub-fluxos por tema: "Menu Principal", "Agendamento", "FAQ"</li>
+      </ul>
+
+      <h3 class="sub">Exemplo: menu principal</h3>
+      <div class="code-block">
+        <div class="code-label">Estrutura de fluxo</div>
+        <pre>
+[Gatilho] Usuário envia qualquer mensagem
+
+[Send Message]
+"Olá! 👋 Sou o assistente virtual.
+O que você precisa?
+
+1️⃣ Informações sobre serviços
+2️⃣ Agendar atendimento
+3️⃣ Falar com atendente"
+
+[Ask Question] → salva em @contact.menu_escolha
+
+[Branch]
+  ├── "1" → fluxo de Informações
+  ├── "2" → fluxo de Agendamento
+  ├── "3" → Assign Agent
+  └── else → "Não entendi. Escolha 1, 2 ou 3."
+        </pre>
+      </div>
+
+      <h3 class="sub">Publicação e Ativação</h3>
+      <p class="body">Como colocar o chatbot em produção com segurança.</p>
+      <div class="steps">
+        <div class="step"><div class="step-num">1</div><div><h3>Revisar o fluxo final</h3><p>Clique em <strong>Preview</strong> para uma última revisão. Certifique-se de que o fluxo está salvo e todos os nós estão conectados.</p></div></div>
+        <div class="step"><div class="step-num">2</div><div><h3>Ativar o fluxo</h3><p>Clique em <strong>Publish</strong>. O fluxo passa de <span class="tag yellow">Draft</span> para <span class="tag green">Active</span>.</p></div></div>
+        <div class="step"><div class="step-num">3</div><div><h3>Associar o fluxo ao gatilho</h3><p>Em <strong>Settings → Automation</strong> da Inbox, configure qual fluxo deve disparar: na primeira mensagem, por palavra-chave, ou ao receber um template específico.</p></div></div>
+        <div class="step"><div class="step-num">4</div><div><h3>Configurar horários e mensagens offline</h3><p>Em <strong>Settings → Business Hours</strong>, defina o horário de funcionamento e configure uma mensagem automática para fora do expediente.</p></div></div>
+        <div class="step"><div class="step-num">5</div><div><h3>Avisar a equipe de atendimento</h3><p>Notifique os agentes que o bot está ativo. Explique quais situações geram handoff e como identificar essas conversas no painel.</p></div></div>
+      </div>
+
+      <div class="callout danger">
+        <span class="callout-icon">🚨</span>
+        <div><strong>Cuidado ao substituir um fluxo ativo</strong>Conversas em andamento continuam no fluxo antigo. Novas conversas usam o fluxo publicado. Evite publicar alterações grandes durante horários de pico.</div>
+      </div>
+      <div class="video-embed">
+        <iframe src="https://www.youtube.com/embed/VIDEO_ID_CONSTRUCAO" title="Vídeo: Construção do Fluxo" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+      </div>
+    </div>
+    <div class="page-nav">
+      <button onclick="goTo(3)">← Anterior</button>
+      <span class="page-counter">4 de 6</span>
+      <button class="next" onclick="goTo(5)">Próximo →</button>
+    </div>
+  </div>
