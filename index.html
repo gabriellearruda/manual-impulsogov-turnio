@@ -55,7 +55,642 @@
 </svg>
 
 <!-- ══════════ MAIN ══════════ -->
-<div id="main"></div><!-- /main -->
+<div id="main">
+
+    <div class="page active" id="page-1">
+    <div class="hero">
+      <div class="hero-badge">
+        <svg width="14" height="14" fill="#25D366" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.124.558 4.118 1.532 5.845L.043 23.29a.75.75 0 0 0 .921.921l5.444-1.49A11.94 11.94 0 0 0 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 21.818a9.803 9.803 0 0 1-5.006-1.37l-.36-.214-3.727 1.02 1.02-3.726-.214-.36A9.803 9.803 0 0 1 2.182 12C2.182 6.57 6.57 2.182 12 2.182S21.818 6.57 21.818 12 17.43 21.818 12 21.818z"/></svg>
+        Manual ImpulsoGov · Turn.io
+      </div>
+      <h1>Criando Chatbots no<br/><span>WhatsApp</span> com Turn.io</h1>
+      <p>Este manual guia qualquer pessoa do time — independente de conhecimento técnico — no processo de criação de chatbots no WhatsApp, desde a configuração da conta até o monitoramento em produção.</p>
+    </div>
+    <div class="section-wrap">
+      <div class="section-header">
+        <div class="section-num">01</div>
+        <div>
+          <h2>Conceitos Fundamentais</h2>
+          <p>Entenda o ecossistema antes de começar a construir.</p>
+        </div>
+      </div>
+
+      <p class="body">Antes de criar qualquer chatbot, é importante saber que o WhatsApp tem versões diferentes para empresas. Abaixo estão as quatro peças principais do ecossistema: entender o papel de cada uma evita confusão na hora de fazer pedidos e se comunicar com parceiros.</p>
+
+      <div class="cards cards-inline">
+        <div class="card">
+          <div class="card-icon">📱</div>
+          <h3>WhatsApp Business App</h3>
+          <p>Aplicativo gratuito para pequenas empresas. Limitado a 1 dispositivo, sem automação avançada.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">⚡</div>
+          <h3>WhatsApp Business API</h3>
+          <p>Versão para empresas de médio/grande porte. Permite automações, chatbots e envios em escala.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">🔗</div>
+          <h3>BSP (Turn.io)</h3>
+          <p>Business Solution Provider. Intermediário entre sua empresa e a API do WhatsApp.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">🏢</div>
+          <h3>Meta Business Manager</h3>
+          <p>Plataforma da Meta onde ficam as configurações da conta, aprovações e compliance.</p>
+        </div>
+      </div>
+
+      <div class="video-embed">
+        <iframe src="https://www.youtube.com/embed/VIDEO_ID" title="Vídeo de introdução" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+      </div>
+
+      <h3 class="sub">Glossário essencial</h3>
+      <div class="glossary-item"><span class="glossary-term">WABA</span><span class="glossary-def"><strong>WhatsApp Business Account</strong> — a conta oficial da empresa no WhatsApp, vinculada ao Meta Business Manager. É dentro da WABA que ficam registrados os números de telefone da organização. Uma empresa pode ter múltiplas WABAs (ex: uma por projeto ou produto), e cada WABA pode conter vários números. Sem uma WABA ativa e verificada, não é possível usar a API do WhatsApp.</span></div>
+      <div class="glossary-item"><span class="glossary-term">Namespace</span><span class="glossary-def">Identificador único dos seus templates. Gerado automaticamente pelo Meta ao verificar a empresa.</span></div>
+      <div class="glossary-item"><span class="glossary-term">Template (HSM)</span><span class="glossary-def">Mensagem pré-aprovada pelo Meta para iniciar conversas fora da janela de 24h.</span></div>
+      <div class="glossary-item"><span class="glossary-term">Janela de 24h</span><span class="glossary-def">Após o usuário enviar qualquer mensagem, você tem 24h para responder livremente sem precisar de template.</span></div>
+      <div class="glossary-item"><span class="glossary-term">Sessão de conversa</span><span class="glossary-def">Período ativo de conversa. Inicia quando o usuário manda uma mensagem ou quando você envia um template.</span></div>
+      <div class="glossary-item"><span class="glossary-term">Inbox (Turn.io)</span><span class="glossary-def">Canal de comunicação no Turn.io. Cada número de telefone corresponde a uma Inbox.</span></div>
+      <div class="glossary-item"><span class="glossary-term">Journey / Flow</span><span class="glossary-def">Fluxo automatizado construído no Turn.io. Define a lógica de respostas do chatbot. <strong>Cada número de telefone tem suas próprias jornadas</strong> — os fluxos criados para um número não aparecem nem interferem nos demais. Isso permite que números diferentes tenham experiências de conversa completamente independentes.</span></div>
+      <div class="glossary-item"><span class="glossary-term">Messaging Tier</span><span class="glossary-def">Limite de mensagens por dia. Começa em 1.000 e sobe automaticamente com uso e boa qualidade.</span></div>
+      <div class="glossary-item"><span class="glossary-term">Token</span><span class="glossary-def">Credencial de autenticação necessária para que o Turn.io possa enviar mensagens em nome de um número. Sem um token válido e ativo, nenhuma mensagem pode ser enviada. A renovação dos tokens é automatizada pela equipe de engenharia — mas se um token for desativado manualmente ou expirar de forma inesperada, o envio de mensagens daquele número é interrompido imediatamente até que seja reativado.</span></div>
+      <div class="glossary-item" style="border:none"><span class="glossary-term">Phone Quality Rating</span><span class="glossary-def">Avaliação do número pelo Meta (Verde/Amarelo/Vermelho). Impacta limites e pode levar à suspensão.</span></div>
+
+      <h3 class="sub">WABAs atuais</h3>
+      <p class="body">Atualmente a ImpulsoGov opera suas WABAs (WhatsApp Business Accounts) vinculadas ao Meta Business Manager da organização, dentro da estrutura contratada com o Turn.io. 
+        Salvo os números que durante o piloto foi-se configurado dentro da Twilio. Mas já esta planejada a transição para o Turn.io.
+        Cada WABA agrupa os números de telefone usados nos diferentes projetos e chatbots. 
+        Cada WABA tem um nome de projeto e um ID.
+        Mais detalhes abaixo.</p>
+
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Nome da WABA</th><th>Descrição</th></tr></thead>
+          <tbody>
+            <tr><td>ImpulsoGov</td><td>WABA principal com todos os números de mensgaeria.</td></tr>
+            <tr><td>Impulso Gov</td><td>Vazio, criado quando iriamos separar o número da Impulso o que não fizemos por conta do fee waiver. Pode ser apagado.</td></tr>
+            <tr><td>ImpulsoGov - Mensageria</td><td>WABA extra criado quando o principal estava cheio. Quando acabar a transferência de números, pode ser apagado.</td></tr>
+            <tr><td>ImpulsoGov - Mensageria II</td><td>Criado quando o WABA extra ficou cheio também. Pode ser apagado.</td></tr>
+            <tr><td>Mensageria para o Cidadão</td><td>Projeto na Twilio com os 4 municipios do piloto. Números devem seguir para a TurnIO.</td></tr>
+            <tr><td>ImpulsoGov - Mensageria para o Cidadão - Projeto Afluentes</td><td>Inicialmente criado para ter uma area só para o afluentes, mas desligamos para ter acesso ao fee waiver do outro WABA. Pode ser apagado.</td></tr>
+            <tr><td>ImpulsoGov - Pesquisa Saúde Mental</td><td>Projeto para a pesquisa de Saúde Mental.</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3 class="sub">Plano da Turn.io</h3>
+      <div class="callout info">
+        <span class="callout-icon">ℹ️</span>
+        <p>Detalhes sobre o contrato não estão públicos neste manual. Informações sobre o contrato, fale com <strong style="white-space:nowrap">João Abreu</strong>, responsável que assinou o contrato, ou a responsável de parcerias na <strong>gestão interna</strong>, que detém todos os registros.</p>
+      </div>
+
+      <p class="body">Quando ao sistema de pagamento ele é composto por <strong>três cobranças distintas</strong>, que se somam. Clique em cada uma para ver os detalhes.</p>
+
+      <div class="accordion">
+        <details>
+          <summary>
+            <span class="acc-icon">📦</span>
+            <span class="acc-text">
+              <h3>1. Inscrição (Subscription)</h3>
+              <p>Assinatura da plataforma Turn.io. É um valor recorrente por WABA, definido pelo plano contratado. Independe do volume de uso.</p>
+            </span>
+            <span class="acc-chevron">▼</span>
+          </summary>
+          <div class="acc-body">
+            <p class="body">
+              Cada plano é cobrado mensalmente, outros projetos já foram criados mas não continuados, os projetos e planos ativos hoje são:
+            </p>
+            <div class="table-wrap">
+              <table>
+                <thead><tr><th>WABA Nome</th><th>Plano</th><th>Descrição</th><th>Fee Waiver</th></tr></thead>
+                <tbody>
+                  <tr><td>ImpulsoGov</td><td><code>enterprise_subscription</code></td><td>Assinatura base do workspace Turn.io da ImpulsoGov. Por padrão vem com um número mas na nossa negociação inicial ficamos com 14 gratuitos, os outros foram adicionados com um valor a mais.</td><td>✅</td></tr>
+                  <tr><td>ImpulsoGov · Mensageria</td><td><code>-</code></td><td>Esse WABA foi criado quando atingimos o teto de 120 inicialmente (não mais existente) para dar vazão aos outros números necessários. Sem outro propósito. Pela <a href="https://impulsogov.slack.com/archives/C05LBADGEE9/p1761930185810979?thread_ts=1759953481.862219&cid=C05LBADGEE9" target="_blank">negociação com Gustav (CEO Turn)</a> ele não deve ter assinatura cobrada.</td><td>❌</td></tr>
+                  <tr><td>ImpulsoGov · Pesquisa Saúde Mental</td><td><code>pro_subscription</code></td><td>WABA da pesquisa de saúde mental.</td><td>❌</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </details>
+
+        <details>
+          <summary>
+            <span class="acc-icon">📞</span>
+            <span class="acc-text">
+              <h3>2. Números de telefone</h3>
+              <p>Cobrança por cada número adicional</p>
+            </span>
+            <span class="acc-chevron">▼</span>
+          </summary>
+          <div class="acc-body">
+            <p class="body">
+              Todos os números adicionais nos WABAs "ImpulsoGov" e "ImpulsoGov · Mensageria" têm custo associado, que deveria ser de 120 doláres anuais. Para mais informações consultar João Abreu. O WABA de Saúde Mental tem o preço padrão da plataforma
+            </p>
+          </div>
+        </details>
+
+        <details>
+          <summary>
+            <span class="acc-icon">💬</span>
+            <span class="acc-text">
+              <h3>3. Mensagens / Conversas</h3>
+              <p>Cobrança da Meta por mensagem enviada, conforme a categoria do template e o país do destinatário.</p>
+            </span>
+            <span class="acc-chevron">▼</span>
+          </summary>
+          <div class="acc-body">
+            <p class="body">O Turn.io opera num <strong>sistema de créditos pré-pago</strong>. A assinatura ativa dá acesso à plataforma, mas o envio de certos tipos de mensagem consome crédito adicional. Esse custo reflete diretamente a precificação da Meta, que é <strong>por mensagem enviada</strong> e varia conforme a <strong>categoria do template</strong> e o <strong>código do país</strong> do destinatário.</p>
+
+            <div class="callout success">
+              <span class="callout-icon">✅</span>
+              <div><strong>Mensagens recebidas são sempre gratuitas</strong>Você só paga por mensagens <strong>enviadas</strong>. Tudo o que o usuário manda para o bot é livre de custo.</div>
+            </div>
+
+            <p class="body"><strong>Os 4 tipos de mensagem e seus custos:</strong></p>
+            <div class="table-wrap">
+              <table>
+                <thead><tr><th>Tipo</th><th>Custo</th></tr></thead>
+                <tbody>
+                  <tr><td><span class="tag green">Serviço</span> (free-form)</td><td><strong>Sempre gratuito.</strong> Respostas manuais do operador e qualquer mensagem que não seja template.</td></tr>
+                  <tr><td><span class="tag blue">Utilidade</span></td><td>Pode ser <strong>gratuito</strong> se a conversa estiver dentro da janela de atendimento de 24h.</td></tr>
+                  <tr><td><span class="tag green">Marketing</span></td><td>Geralmente <strong>pago</strong>. Cobrado pela Meta na entrega.</td></tr>
+                  <tr><td><span class="tag purple">Autenticação</span></td><td>Geralmente <strong>pago</strong>. Cobrado pela Meta na entrega.</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="body">A Meta cobra templates <strong>quando são entregues</strong> (não quando enviados). Se o usuário estiver offline, a Meta tenta entregar por até 30 dias — e a cobrança usa a classificação que o template tinha no momento do envio.</p>
+
+            <p class="body"><strong>Programa de Isenção (Waiver) da Meta:</strong> a Meta estendeu o programa de isenção de taxas até <strong>30 de setembro de 2026</strong>, porém de forma reduzida. O waiver agora cobre <strong>apenas templates de Utilidade e Autenticação</strong>, e somente para organizações com casos de uso em áreas como saúde, resposta a crises e engajamento cívico — perfil que se aplica à ImpulsoGov.</p>
+            <div class="callout warning">
+              <span class="callout-icon">⚠️</span>
+              <div><strong>Atenção, mesmo com o waiver</strong>Templates de <strong>Marketing não são mais cobertos</strong> por ninguém. E, mesmo coberto pela isenção, o saldo de crédito no Turn.io precisa estar em <strong><div id="main"></div><!-- /main --> ou positivo</strong> — se ficar negativo, o envio de templates (inclusive Utilidade e Autenticação) é bloqueado.</div>
+            </div>
+
+            <p class="body"><strong>Como funciona o crédito pré-pago:</strong></p>
+            <ul class="list">
+              <li>O Turn.io <strong>paga a Meta em seu nome</strong> — durante o onboarding, a linha de crédito do Turn.io é compartilhada com a sua WABA, então todos os custos dos números da WABA são cobrados via Turn.io</li>
+              <li>É um sistema <strong>pré-pago</strong>: para enviar mensagens não-gratuitas, é preciso ter crédito (top-up) na plataforma</li>
+              <li>Os créditos só estão disponíveis para clientes ativos — primeiro a assinatura, depois o top-up</li>
+              <li>As tarifas são cobradas em <strong>USD</strong> (Turn.io é uma empresa dos EUA). O Turn.io não tem lucro sobre o valor da Meta — cobra apenas uma <strong>taxa de processamento de 5%</strong></li>
+              <li>Dependendo da estratégia e do público, é possível <strong>nunca precisar de top-up</strong> — caso você envie apenas mensagens gratuitas</li>
+            </ul>
+            <div class="callout info">
+              <span class="callout-icon">📊</span>
+              <div><strong>Onde acompanhar</strong>Em <strong>Settings → Message Billing</strong> você vê o saldo de crédito (em tempo real), saldo de mensagens gratuitas do waiver, histórico detalhado por tipo de mensagem e a opção de alternar entre visualização em "Mensagens" e "USD". Os valores nos gráficos são <strong>estimativas</strong> baseadas nas notificações de entrega da Meta — o Turn.io estima por baixo para nunca cobrar a mais, então não batem exatamente com o dashboard da Meta.</div>
+            </div>
+          </div>
+        </details>
+      </div>
+    </div>
+    <div class="page-nav">
+      <button disabled>← Anterior</button>
+      <span class="page-counter">1 de 6</span>
+      <button class="next" onclick="goTo(2)">Próximo →</button>
+    </div>
+  </div>
+
+
+    <div class="page" id="page-2">
+    <div class="section-wrap">
+      <div class="section-header">
+        <div class="section-num">02</div>
+        <div>
+          <h2>Fluxograma e Pontos de Contato</h2>
+          <p>Como funciona o controle do fluxo da Turn e com quem falar.</p>
+        </div>
+      </div>
+
+      <div class="callout info" style="margin-bottom:24px;">
+        <span class="callout-icon">📄</span>
+        <p>Este fluxo está documentado com detalhes no Notion: <a href="https://app.notion.com/p/impulsogov/Cria-o-de-perfil-de-municipio-21430e72f9d28076a91be54734bd243d" target="_blank" rel="noopener">Criação de perfil de município</a>.</p>
+      </div>
+
+      <h3 class="sub">Fluxo de criação de perfil municipal</h3>
+      <div style="overflow-x:auto;margin-bottom:32px;">
+        <svg viewBox="0 0 860 1125" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:860px;display:block;margin:0 auto;" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif">
+          <title>Fluxo de Criação e Manutenção de Perfil Municipal na Turn.io</title>
+          <defs>
+            <marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+              <path d="M0,0 L0,6 L8,3 z" fill="#94a3b8"/>
+            </marker>
+          </defs>
+          <rect width="860" height="1125" fill="#f8fafc" rx="12"/>
+          <text x="430" y="38" text-anchor="middle" font-size="17" font-weight="700" fill="#0f172a">Fluxo de Criação de Perfil Municipal · Turn.io</text>
+          <text x="430" y="58" text-anchor="middle" font-size="12" fill="#64748b">Da entrada do município até a ativação dos disparos</text>
+          <!-- ETAPA 1 -->
+          <rect x="30" y="78" width="800" height="120" rx="10" fill="#f0fdf4" stroke="#22c55e" stroke-width="1.5"/>
+          <rect x="30" y="78" width="8" height="120" rx="4" fill="#22c55e"/>
+          <text x="52" y="100" font-size="11" font-weight="700" fill="#15803d" letter-spacing="0.5">ETAPA 1 · PRÉ-EMBARQUE</text>
+          <text x="790" y="100" text-anchor="end" font-size="11" fill="#86efac">Time de Operações</text>
+          <rect x="52" y="110" width="118" height="52" rx="7" fill="white" stroke="#bbf7d0" stroke-width="1"/>
+          <text x="111" y="129" text-anchor="middle" font-size="11" font-weight="600" fill="#166534">Entrada do município</text>
+          <text x="111" y="144" text-anchor="middle" font-size="10" fill="#4b5563">Captação pelo Time</text>
+          <text x="111" y="156" text-anchor="middle" font-size="10" fill="#4b5563">de Operações + ACT</text>
+          <line x1="170" y1="136" x2="212" y2="136" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#arrow)"/>
+          <rect x="214" y="110" width="145" height="52" rx="7" fill="white" stroke="#bbf7d0" stroke-width="1"/>
+          <text x="286" y="129" text-anchor="middle" font-size="11" font-weight="600" fill="#166534">Conversa com COAPS</text>
+          <text x="286" y="144" text-anchor="middle" font-size="10" fill="#4b5563">Checklist sanitarista</text>
+          <text x="286" y="156" text-anchor="middle" font-size="10" fill="#4b5563">sobre o município</text>
+          <line x1="359" y1="136" x2="374" y2="136" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#arrow)"/>
+          <rect x="376" y="110" width="145" height="52" rx="7" fill="white" stroke="#bbf7d0" stroke-width="1"/>
+          <text x="448" y="129" text-anchor="middle" font-size="11" font-weight="600" fill="#166534">Transmissão de dados</text>
+          <text x="448" y="144" text-anchor="middle" font-size="10" fill="#4b5563">Board de Acomp.</text>
+          <text x="448" y="156" text-anchor="middle" font-size="10" fill="#4b5563">puxa município</text>
+          <line x1="521" y1="136" x2="536" y2="136" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#arrow)"/>
+          <rect x="538" y="110" width="145" height="52" rx="7" fill="#dcfce7" stroke="#86efac" stroke-width="1"/>
+          <text x="610" y="129" text-anchor="middle" font-size="11" font-weight="600" fill="#166534">Solicita número</text>
+          <text x="610" y="144" text-anchor="middle" font-size="10" fill="#4b5563">para perfil municipal</text>
+          <text x="610" y="156" text-anchor="middle" font-size="10" fill="#15803d" font-weight="600">→ Suporte/Operações</text>
+          <rect x="700" y="117" width="118" height="38" rx="6" fill="#22c55e"/>
+          <text x="759" y="133" text-anchor="middle" font-size="10" font-weight="700" fill="white">STATUS</text>
+          <text x="759" y="147" text-anchor="middle" font-size="10" fill="white">ACT assinado</text>
+          <line x1="430" y1="198" x2="430" y2="210" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#arrow)"/>
+          <!-- ETAPA 2 -->
+          <rect x="30" y="210" width="800" height="118" rx="10" fill="#eff6ff" stroke="#3b82f6" stroke-width="1.5"/>
+          <rect x="30" y="210" width="8" height="118" rx="4" fill="#3b82f6"/>
+          <text x="52" y="232" font-size="11" font-weight="700" fill="#1d4ed8" letter-spacing="0.5">ETAPA 2 · AQUISIÇÃO DE CHIP</text>
+          <text x="790" y="232" text-anchor="end" font-size="11" fill="#93c5fd">Operações + GI</text>
+          <rect x="52" y="244" width="200" height="64" rx="7" fill="white" stroke="#bfdbfe" stroke-width="1"/>
+          <text x="152" y="263" text-anchor="middle" font-size="11" font-weight="600" fill="#1e40af">Compra pela plataforma VIVO</text>
+          <text x="152" y="278" text-anchor="middle" font-size="10" fill="#4b5563">Número adquirido via</text>
+          <text x="152" y="291" text-anchor="middle" font-size="10" fill="#4b5563">plataforma da VIVO</text>
+          <text x="152" y="303" text-anchor="middle" font-size="10" fill="#1d4ed8">Gestão Interna (GI)</text>
+          <line x1="252" y1="276" x2="267" y2="276" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#arrow)"/>
+          <rect x="269" y="244" width="200" height="64" rx="7" fill="#dbeafe" stroke="#93c5fd" stroke-width="1"/>
+          <text x="369" y="263" text-anchor="middle" font-size="11" font-weight="600" fill="#1e40af">Chip disponível</text>
+          <text x="369" y="278" text-anchor="middle" font-size="10" fill="#4b5563">Número pronto para</text>
+          <text x="369" y="291" text-anchor="middle" font-size="10" fill="#4b5563">cadastro na Turn.io</text>
+          <text x="369" y="303" text-anchor="middle" font-size="10" fill="#1d4ed8">Aguardar entrega</text>
+          <rect x="488" y="251" width="330" height="50" rx="6" fill="#eff6ff" stroke="#bfdbfe" stroke-width="1"/>
+          <text x="653" y="271" text-anchor="middle" font-size="10" fill="#1e40af" font-weight="600">Chip físico da VIVO</text>
+          <text x="653" y="286" text-anchor="middle" font-size="10" fill="#4b5563">Inserir no celular antes do cadastro na Etapa 3</text>
+          <line x1="430" y1="328" x2="430" y2="348" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#arrow)"/>
+          <!-- ETAPA 3 -->
+          <rect x="30" y="352" width="800" height="175" rx="10" fill="#fdf4ff" stroke="#a855f7" stroke-width="1.5"/>
+          <rect x="30" y="352" width="8" height="175" rx="4" fill="#a855f7"/>
+          <text x="52" y="374" font-size="11" font-weight="700" fill="#7e22ce" letter-spacing="0.5">ETAPA 3 · CADASTRO NA TURN</text>
+          <text x="790" y="374" text-anchor="end" font-size="11" fill="#d8b4fe">Suporte/Operações</text>
+          <rect x="52" y="386" width="130" height="120" rx="7" fill="white" stroke="#e9d5ff" stroke-width="1"/>
+          <text x="117" y="406" text-anchor="middle" font-size="11" font-weight="600" fill="#6b21a8">1. Acesso Turn</text>
+          <text x="117" y="421" text-anchor="middle" font-size="10" fill="#4b5563">app.turn.io</text>
+          <text x="117" y="434" text-anchor="middle" font-size="10" fill="#4b5563">Add new number</text>
+          <text x="117" y="447" text-anchor="middle" font-size="10" fill="#4b5563">"No, we have a number"</text>
+          <text x="117" y="462" text-anchor="middle" font-size="10" fill="#7c3aed">Problemas de acesso:</text>
+          <text x="117" y="475" text-anchor="middle" font-size="10" fill="#7c3aed">contatar GI</text>
+          <line x1="182" y1="446" x2="197" y2="446" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#arrow)"/>
+          <rect x="199" y="386" width="130" height="120" rx="7" fill="white" stroke="#e9d5ff" stroke-width="1"/>
+          <text x="264" y="406" text-anchor="middle" font-size="11" font-weight="600" fill="#6b21a8">2. Verificação</text>
+          <text x="264" y="426" text-anchor="middle" font-size="10" fill="#4b5563">Chip inserido no celular</text>
+          <text x="264" y="440" text-anchor="middle" font-size="10" fill="#4b5563">antes dessa etapa</text>
+          <line x1="329" y1="446" x2="344" y2="446" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#arrow)"/>
+          <rect x="346" y="386" width="130" height="120" rx="7" fill="#fae8ff" stroke="#d8b4fe" stroke-width="1"/>
+          <text x="411" y="406" text-anchor="middle" font-size="11" font-weight="600" fill="#6b21a8">3. Nome do perfil</text>
+          <text x="411" y="421" text-anchor="middle" font-size="10" fill="#4b5563">"Secretaria de Saúde</text>
+          <text x="411" y="434" text-anchor="middle" font-size="10" fill="#4b5563">de {município}"</text>
+          <text x="411" y="452" text-anchor="middle" font-size="10" font-weight="700" fill="#dc2626">Nome incorreto =</text>
+          <text x="411" y="465" text-anchor="middle" font-size="10" font-weight="700" fill="#dc2626">linha perdida!</text>
+          <line x1="476" y1="446" x2="491" y2="446" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#arrow)"/>
+          <rect x="493" y="386" width="130" height="120" rx="7" fill="white" stroke="#e9d5ff" stroke-width="1"/>
+          <text x="558" y="406" text-anchor="middle" font-size="11" font-weight="600" fill="#6b21a8">4. Vinculação WABA</text>
+          <text x="558" y="421" text-anchor="middle" font-size="10" fill="#4b5563">Pode ser necessário</text>
+          <text x="558" y="434" text-anchor="middle" font-size="10" fill="#4b5563">abrir chamado no Slack</text>
+          <text x="558" y="447" text-anchor="middle" font-size="10" fill="#7c3aed">#shared-turn-impulso</text>
+          <text x="558" y="460" text-anchor="middle" font-size="10" fill="#4b5563">Turn vincula a conta</text>
+          <line x1="623" y1="446" x2="638" y2="446" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#arrow)"/>
+          <rect x="640" y="386" width="168" height="120" rx="7" fill="white" stroke="#e9d5ff" stroke-width="1"/>
+          <text x="724" y="406" text-anchor="middle" font-size="11" font-weight="600" fill="#6b21a8">5. Token + BigQuery</text>
+          <text x="724" y="421" text-anchor="middle" font-size="10" fill="#4b5563">Criar token em Integrations</text>
+          <text x="724" y="434" text-anchor="middle" font-size="10" fill="#4b5563">Copiar na planilha</text>
+          <text x="724" y="447" text-anchor="middle" font-size="10" fill="#4b5563">Bitwarden → credenciais BQ</text>
+          <text x="724" y="460" text-anchor="middle" font-size="10" fill="#4b5563">Subir em Integrações</text>
+          <text x="724" y="474" text-anchor="middle" font-size="10" font-weight="600" fill="#7c3aed">Notion: Perfil</text>
+          <text x="724" y="487" text-anchor="middle" font-size="10" font-weight="600" fill="#7c3aed">Turn criado</text>
+          <line x1="430" y1="527" x2="430" y2="547" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#arrow)"/>
+          <!-- ETAPA 4 -->
+          <rect x="30" y="551" width="800" height="140" rx="10" fill="#fff7ed" stroke="#f97316" stroke-width="1.5"/>
+          <rect x="30" y="551" width="8" height="140" rx="4" fill="#f97316"/>
+          <text x="52" y="573" font-size="11" font-weight="700" fill="#c2410c" letter-spacing="0.5">ETAPA 4 · EMBARQUE E COLETA DE DADOS</text>
+          <text x="790" y="573" text-anchor="end" font-size="11" fill="#fed7aa">Analista Mensageria</text>
+          <rect x="52" y="585" width="155" height="84" rx="7" fill="white" stroke="#fed7aa" stroke-width="1"/>
+          <text x="129" y="605" text-anchor="middle" font-size="11" font-weight="600" fill="#c2410c">Preparação</text>
+          <text x="129" y="627" text-anchor="middle" font-size="10" fill="#4b5563">Incluir logo municipal</text>
+          <text x="129" y="641" text-anchor="middle" font-size="10" fill="#4b5563">nos slides</text>
+          <line x1="207" y1="627" x2="222" y2="627" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#arrow)"/>
+          <rect x="224" y="585" width="155" height="84" rx="7" fill="white" stroke="#fed7aa" stroke-width="1"/>
+          <text x="301" y="605" text-anchor="middle" font-size="11" font-weight="600" fill="#c2410c">Encontro de embarque</text>
+          <text x="301" y="620" text-anchor="middle" font-size="10" fill="#4b5563">Confirmação de logo</text>
+          <text x="301" y="633" text-anchor="middle" font-size="10" fill="#4b5563">Coleta de infos</text>
+          <text x="301" y="646" text-anchor="middle" font-size="10" fill="#4b5563">das unidades (Retool)</text>
+          <text x="301" y="658" text-anchor="middle" font-size="10" fill="#4b5563">Formulário de avaliação</text>
+          <line x1="379" y1="627" x2="408" y2="627" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#arrow)"/>
+          <rect x="410" y="585" width="244" height="84" rx="7" fill="#ffedd5" stroke="#fdba74" stroke-width="1"/>
+          <text x="532" y="605" text-anchor="middle" font-size="11" font-weight="600" fill="#c2410c">Dados 100% coletados</text>
+          <text x="532" y="620" text-anchor="middle" font-size="10" fill="#4b5563">Sinalizar no Fluxo Apoio</text>
+          <text x="532" y="633" text-anchor="middle" font-size="10" fill="#4b5563">STATUS: Embarque Concluído</text>
+          <text x="532" y="646" text-anchor="middle" font-size="10" font-weight="600" fill="#ea580c">Dados COEQs 100% captados</text>
+          <line x1="430" y1="691" x2="430" y2="711" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#arrow)"/>
+          <!-- ETAPA 5 -->
+          <rect x="30" y="715" width="800" height="180" rx="10" fill="#f0fdf4" stroke="#22c55e" stroke-width="1.5"/>
+          <rect x="30" y="715" width="8" height="180" rx="4" fill="#22c55e"/>
+          <text x="52" y="737" font-size="11" font-weight="700" fill="#15803d" letter-spacing="0.5">ETAPA 5 · ATIVAÇÃO E DISPARO</text>
+          <text x="790" y="737" text-anchor="end" font-size="11" fill="#86efac">Mensageria + Slack</text>
+          <rect x="52" y="749" width="230" height="120" rx="7" fill="white" stroke="#bbf7d0" stroke-width="1"/>
+            <text x="167" y="766" text-anchor="middle" font-size="11" font-weight="600" fill="#166534">Ativação no Slack</text>
+            <text x="167" y="780" text-anchor="middle" font-size="10" fill="#4b5563">Automaticamente quando o embarque</text>
+            <text x="167" y="793" text-anchor="middle" font-size="10" fill="#4b5563">é concluído se ativa um fluxo de ativação.</text>
+            <text x="167" y="806" text-anchor="middle" font-size="10" fill="#4b5563">É enviada uma mensagem no canal do Slack para</text>
+            <text x="167" y="819" text-anchor="middle" font-size="10" fill="#4b5563">validação. Ao iniciar uma mensagem é enviada</text>
+            <text x="167" y="832" text-anchor="middle" font-size="10" fill="#4b5563">ao número da responsável em operações.</text>
+            <text x="167" y="845" text-anchor="middle" font-size="10" fill="#4b5563"></text>
+          <line x1="282" y1="829" x2="297" y2="829" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#arrow)"/>
+          <rect x="299" y="749" width="210" height="120" rx="7" fill="white" stroke="#bbf7d0" stroke-width="1"/>
+            <text x="404" y="786" text-anchor="middle" font-size="11" font-weight="600" fill="#166534">Plano de comunicação</text>
+            <text x="404" y="800" text-anchor="middle" font-size="10" fill="#4b5563">Cartaz + comunicado</text>
+            <text x="404" y="816" text-anchor="middle" font-size="10" fill="#4b5563">para secretário e COAPS</text>
+          <line x1="509" y1="829" x2="524" y2="829" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#arrow)"/>
+          <rect x="526" y="749" width="282" height="120" rx="7" fill="#22c55e"/>
+            <text x="667" y="800" text-anchor="middle" font-size="12" font-weight="700" fill="white">✓ ATIVO</text>
+            <text x="667" y="816" text-anchor="middle" font-size="10" fill="white">Notion: "Em Disparo"</text>
+          <line x1="430" y1="895" x2="430" y2="947" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#arrow)"/>
+          <!-- ETAPA 6 -->
+          <rect x="30" y="949" width="800" height="108" rx="10" fill="#f0f9ff" stroke="#0ea5e9" stroke-width="1.5"/>
+          <rect x="30" y="949" width="8" height="108" rx="4" fill="#0ea5e9"/>
+          <text x="52" y="971" font-size="11" font-weight="700" fill="#0369a1" letter-spacing="0.5">ETAPA 6 · MANUTENÇÃO CONTÍNUA</text>
+          <text x="790" y="971" text-anchor="end" font-size="11" fill="#7dd3fc">Equipe de Mensageria</text>
+          <rect x="52" y="983" width="180" height="60" rx="7" fill="white" stroke="#bae6fd" stroke-width="1"/>
+          <text x="142" y="1003" text-anchor="middle" font-size="11" font-weight="600" fill="#0369a1">Criação de templates</text>
+          <text x="142" y="1018" text-anchor="middle" font-size="10" fill="#4b5563">HSMs e mensagens</text>
+          <text x="142" y="1031" text-anchor="middle" font-size="10" fill="#4b5563">aprovadas pela Meta</text>
+          <line x1="232" y1="1013" x2="247" y2="1013" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#arrow)"/>
+          <rect x="249" y="983" width="180" height="60" rx="7" fill="white" stroke="#bae6fd" stroke-width="1"/>
+          <text x="339" y="1003" text-anchor="middle" font-size="11" font-weight="600" fill="#0369a1">Construção de jornadas</text>
+          <text x="339" y="1018" text-anchor="middle" font-size="10" fill="#4b5563">Fluxos e automações</text>
+          <text x="339" y="1031" text-anchor="middle" font-size="10" fill="#4b5563">na plataforma Turn.io</text>
+          <line x1="429" y1="1013" x2="444" y2="1013" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#arrow)"/>
+          <rect x="446" y="983" width="180" height="60" rx="7" fill="white" stroke="#bae6fd" stroke-width="1"/>
+          <text x="536" y="1003" text-anchor="middle" font-size="11" font-weight="600" fill="#0369a1">Suporte Meta</text>
+          <text x="536" y="1018" text-anchor="middle" font-size="10" fill="#4b5563">Aprovação de templates,</text>
+          <text x="536" y="1031" text-anchor="middle" font-size="10" fill="#4b5563">limites e bloqueios</text>
+          <line x1="626" y1="1013" x2="641" y2="1013" stroke="#94a3b8" stroke-width="1.5" marker-end="url(#arrow)"/>
+          <rect x="643" y="983" width="175" height="60" rx="7" fill="#e0f2fe" stroke="#7dd3fc" stroke-width="1"/>
+          <text x="730" y="1003" text-anchor="middle" font-size="11" font-weight="600" fill="#0369a1">Suporte Turn.io</text>
+          <text x="730" y="1018" text-anchor="middle" font-size="10" fill="#4b5563">Dúvidas técnicas via</text>
+          <text x="730" y="1031" text-anchor="middle" font-size="10" fill="#7c3aed">#shared-turn-impulso</text>
+          <!-- Footer contatos -->
+          <rect x="30" y="1070" width="800" height="44" rx="8" fill="#1e293b"/>
+          <text x="110" y="1088" text-anchor="middle" font-size="10" fill="#cbd5e1">GI (Gestão Interna)</text>
+          <text x="110" y="1102" text-anchor="middle" font-size="10" fill="#64748b">Chips / acesso</text>
+          <text x="310" y="1088" text-anchor="middle" font-size="10" fill="#a78bfa">Raquel Graça (Turn.io)</text>
+          <text x="310" y="1102" text-anchor="middle" font-size="10" fill="#64748b">Suporte BSP · #shared-turn-impulso</text>
+          <text x="550" y="1088" text-anchor="middle" font-size="10" fill="#a78bfa">Vitor Cairoli (Turn.io)</text>
+          <text x="550" y="1102" text-anchor="middle" font-size="10" fill="#64748b">Escaladas estratégicas</text>
+          <text x="730" y="1088" text-anchor="middle" font-size="10" fill="#cbd5e1">João Abreu</text>
+          <text x="730" y="1102" text-anchor="middle" font-size="10" fill="#64748b">Contrato / Meta LATAM</text>
+        </svg>
+      </div>
+
+      <h3 class="sub">Pontos de contato</h3>
+      <div class="contacts">
+        <div class="contact-card">
+          <div class="avatar">EI</div>
+          <h3>Equipe interna</h3>
+          <p style="font-size:13px;color:var(--text-muted);margin-top:4px;">
+            Para questões na Meta Business Manager, equipe de produto deve administrar.<br><br>
+            Dentro da Turn a configuração do número é com equipe de Operações (assistentes de processo, contatar a coordenação da area, atualmente Beatriz).<br><br>
+            Administração da plataforma Turn é com equipe de produto e engenharia.
+          </p>
+        </div>
+        <div class="contact-card">
+          <div class="avatar">T</div>
+          <h3>Suporte Turn.io</h3>
+          <span class="role">BSP / Provedor</span>
+          <p style="font-size:13px;color:var(--text-muted);margin-top:4px;">
+            Suporte no slack pelo canal #shared-turn-impulso. Nosso suporte é com a Raquel Graça atualmente e em casos mais estratégicos sobe para o Vitor Cairoli. Grupo no whatsapp não é mais utilizado.</p>
+        </div>
+        <div class="contact-card">
+          <div class="avatar">M</div>
+          <h3>Suporte Meta</h3>
+          <a href="https://business.facebook.com/help" target="_blank">business.facebook.com/help</a>
+          <p style="font-size:13px;color:var(--text-muted);margin-top:4px;">Não temos contato direto com a Meta fora do suporte oficial. Para assuntos estratégicos, <strong>João Abreu</strong> possui o contato da Head da Meta LATAM.</p>
+        </div>
+      </div>
+
+      <div class="video-embed">
+        <iframe src="https://www.youtube.com/embed/VIDEO_ID_FLUXO" title="Vídeo: Fluxograma e Pontos de Contato" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+      </div>
+    </div>
+    <div class="page-nav">
+      <button onclick="goTo(1)">← Anterior</button>
+      <span class="page-counter">2 de 6</span>
+      <button class="next" onclick="goTo(3)">Próximo →</button>
+    </div>
+  </div>
+
+
+    <div class="page" id="page-3">
+    <div class="section-wrap">
+      <div class="section-header">
+        <div class="section-num">03</div>
+        <div>
+          <h2>Configuração Inicial no Turn.io</h2>
+          <p>Como adicionar um novo número e configurar uma Inbox do zero.</p>
+        </div>
+      </div>
+
+      <div class="callout info">
+        <span class="callout-icon">ℹ️</span>
+        <div><strong>Contexto ImpulsoGov</strong>A ImpulsoGov já tem workspaces ativos no Turn.io vinculados às WABAs da organização. Esta página descreve o processo para <strong>adicionar um novo número</strong> a um workspace existente — não a criação de uma conta do zero.</div>
+      </div>
+
+      <h3 class="sub">1. Acessar o workspace correto</h3>
+      <p class="body">Entre em <a href="https://app.turn.io" target="_blank">app.turn.io</a> com sua conta institucional. A ImpulsoGov tem mais de um workspace — confirme que está no correto antes de qualquer ação. O nome do workspace aparece no canto superior esquerdo da tela.</p>
+
+      <div class="callout warning">
+        <span class="callout-icon">⚠️</span>
+        <div><strong>Workspace errado = número errado</strong>Cada workspace corresponde a uma WABA diferente. Criar uma Inbox no workspace errado vincula o número à WABA errada, o que afeta cobrança, permissões e rastreabilidade.</div>
+      </div>
+
+      <h3 class="sub">2. Cadastrar um novo número</h3>
+      <p class="body">Cada número de telefone no Turn.io é representado por uma <strong>Inbox</strong>. Para adicionar um novo número:</p>
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">1</div>
+          <div><p>Vá em Add new number.</p></div>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div><h3>Embedded Signup</h3><p>O Turn.io abre um fluxo do Facebook (Embedded Signup) para autorizar o número na WABA. Você precisará de acesso de administrador ao <strong>Meta Business Manager</strong>. O número <strong>não pode estar ativo em nenhum aplicativo WhatsApp</strong> neste momento — se estiver, remova primeiro.</p></div>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <div><h3>Verificar o número</h3><p>A Meta envia um código de verificação via SMS ou chamada para o número. Insira o código no fluxo. Após confirmação, o número fica vinculado à WABA e aparece na Inbox.</p></div>
+        </div>
+        <div class="step">
+          <div class="step-num">4</div>
+          <div><h3>Configurar o perfil da Inbox</h3><p>Em <strong>Settings → Profile</strong> da Inbox, preencha: nome de exibição, descrição, foto de perfil, e-mail e site. Essas informações aparecem para os usuários quando abrem o contato no WhatsApp.</p></div>
+        </div>
+      </div>
+      <div class="callout warning">
+        <span class="callout-icon">⚠️</span>
+        <div><strong>Atenção ao Token</strong>
+        Cada Inbox depende de um <strong>token de autenticação</strong> para funcionar. A renovação é automatizada, mas se o token for desativado ou expirar de forma inesperada, o envio de mensagens é bloqueado imediatamente. Em caso de falha de envio sem causa aparente, verifique o status do token em <strong>Settings → Integrations → WhatsApp</strong>.
+        </div>
+      </div>
+      <div class="video-embed">
+        <iframe src="https://www.youtube.com/embed/VIDEO_ID_SETUP" title="Vídeo: Configuração no Turn.io" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+      </div>
+    </div>
+    <div class="page-nav">
+      <button onclick="goTo(2)">← Anterior</button>
+      <span class="page-counter">3 de 6</span>
+      <button class="next" onclick="goTo(4)">Próximo →</button>
+    </div>
+  </div>
+
+
+    <div class="page" id="page-4">
+    <div class="section-wrap">
+      <div class="section-header">
+        <div class="section-num">04</div>
+        <div>
+          <h2>Construção do Fluxo do Chatbot</h2>
+          <p>Como criar a lógica de conversa usando o Journey Builder do Turn.io.</p>
+        </div>
+      </div>
+
+      <h3 class="sub">Arquitetura de um fluxo</h3>
+      <div class="flow">
+        <div class="flow-step">Gatilho<br/><small style="font-weight:400;font-size:11px;color:var(--text-muted)">keyword / template</small></div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step">Condição<br/><small style="font-weight:400;font-size:11px;color:var(--text-muted)">if / else</small></div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step">Ação<br/><small style="font-weight:400;font-size:11px;color:var(--text-muted)">enviar / salvar</small></div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step">Resposta<br/><small style="font-weight:400;font-size:11px;color:var(--text-muted)">texto / botão</small></div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step">Fim ou<br/>Handoff</div>
+      </div>
+
+      <div class="callout info">
+        <span class="callout-icon">ℹ️</span>
+        <div><strong>Variáveis de contato</strong>Use a sintaxe <code>@contact.nome_do_campo</code> para ler e escrever propriedades do contato nos nós de fluxo. Isso permite personalizar mensagens e criar lógica baseada no histórico do usuário.</div>
+      </div>
+
+
+      <h3 class="sub">Publicação e Ativação</h3>
+      <p class="body">Como colocar o chatbot em produção com segurança.</p>
+      <div class="steps">
+        <div class="step"><div class="step-num">1</div><div><h3>Revisar o fluxo final</h3><p>Clique em <strong>Preview</strong> para uma última revisão. Certifique-se de que o fluxo está salvo e todos os nós estão conectados.</p></div></div>
+        <div class="step"><div class="step-num">2</div><div><h3>Ativar o fluxo</h3><p>Clique em <strong>Publish</strong>. O fluxo passa de <span class="tag yellow">Draft</span> para <span class="tag green">Active</span>.</p></div></div>
+        <div class="step"><div class="step-num">3</div><div><h3>Associar o fluxo ao gatilho</h3><p>Em <strong>Settings → Automation</strong> da Inbox, configure qual fluxo deve disparar: na primeira mensagem, por palavra-chave, ou ao receber um template específico.</p></div></div>
+        <div class="step"><div class="step-num">4</div><div><h3>Configurar horários e mensagens offline</h3><p>Em <strong>Settings → Business Hours</strong>, defina o horário de funcionamento e configure uma mensagem automática para fora do expediente.</p></div></div>
+        <div class="step"><div class="step-num">5</div><div><h3>Avisar a equipe de atendimento</h3><p>Notifique os agentes que o bot está ativo. Explique quais situações geram handoff e como identificar essas conversas no painel.</p></div></div>
+      </div>
+
+      <div class="callout danger">
+        <span class="callout-icon">🚨</span>
+        <div><strong>Cuidado ao substituir um fluxo ativo</strong>Conversas em andamento continuam no fluxo antigo. Novas conversas usam o fluxo publicado. Evite publicar alterações grandes durante horários de pico.</div>
+      </div>
+      <div class="video-embed">
+        <iframe src="https://www.youtube.com/embed/VIDEO_ID_CONSTRUCAO" title="Vídeo: Construção do Fluxo" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+      </div>
+    </div>
+    <div class="page-nav">
+      <button onclick="goTo(3)">← Anterior</button>
+      <span class="page-counter">4 de 6</span>
+      <button class="next" onclick="goTo(5)">Próximo →</button>
+    </div>
+  </div>
+
+
+    <div class="page" id="page-5">
+    <div class="section-wrap">
+      <div class="section-header">
+        <div class="section-num">05</div>
+        <div>
+          <h2>Monitoramento e Métricas</h2>
+          <p>Como acompanhar a saúde e o desempenho do chatbot após o lançamento.</p>
+        </div>
+      </div>
+
+      <h3 class="sub">Métricas no Turn.io</h3>
+      <div class="callout info">
+        <span class="callout-icon">📊</span>
+        <div><strong>Nossas métricas no BigQuery</strong>Todas as nossas métricas são enviadas ao BigQuery em números separados e agrupadas com engenharia de dados.</div>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Métrica</th><th>Onde ver</th><th>O que significa</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Conversas abertas</strong></td><td>Dashboard principal</td><td>Quantidade de usuários com conversa ativa no momento</td></tr>
+            <tr><td><strong>Taxa de resolução</strong></td><td>Reports → Overview</td><td>% de conversas encerradas sem precisar de humano</td></tr>
+            <tr><td><strong>Tempo médio de resposta</strong></td><td>Reports → Overview</td><td>Tempo até o usuário receber a primeira resposta</td></tr>
+            <tr><td><strong>Handoffs para humano</strong></td><td>Reports → Agent</td><td>Quantas conversas foram transferidas para atendentes</td></tr>
+            <tr><td><strong>Fluxo analytics</strong></td><td>Journey → Analytics</td><td>Em qual nó os usuários abandonam o fluxo</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3 class="sub">Métricas no Meta Business Manager</h3>
+      <div class="callout warning">
+        <span class="callout-icon">⚠️</span>
+        <div><strong>Alerta de qualidade</strong>Se o Quality Rating cair para Amarelo, você recebe um e-mail do Meta. Investigue imediatamente qual campanha ou fluxo está gerando bloqueios. Causa mais comum: mensagem de citopatológico sendo denunciada.</div>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Métrica</th><th>O que monitorar</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Phone Quality Rating</strong></td><td>Deve ficar <span class="tag green">Verde</span>. Amarelo é alerta; Vermelho pode levar à suspensão</td></tr>
+            <tr><td><strong>Messaging Limit</strong></td><td>Limite atual de conversas únicas por dia. Começa em 1.000</td></tr>
+            <tr><td><strong>Template Performance</strong></td><td>Taxa de leitura e botões clicados. Indica se o conteúdo é relevante</td></tr>
+            <tr><td><strong>Blocked / Reported</strong></td><td>Alto índice derruba o Quality Rating e pode suspender o número</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="page-nav">
+      <button onclick="goTo(4)">← Anterior</button>
+      <span class="page-counter">5 de 6</span>
+      <button class="next" onclick="goTo(6)">Próximo →</button>
+    </div>
+  </div>
+
+
+    <div class="page" id="page-6">
+    <div class="section-wrap">
+      <div class="section-header">
+        <div class="section-num">06</div>
+        <div>
+          <h2>Recursos e Links de Referência</h2>
+          <p>Onde encontrar documentação atualizada e suporte.</p>
+        </div>
+      </div>
+
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Recurso</th><th>URL</th><th>Para quê</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Turn.io Docs</strong></td><td><a href="https://whatsapp.turn.io/docs/" target="_blank">whatsapp.turn.io/docs</a></td><td>Documentação completa da plataforma</td></tr>
+            <tr><td><strong>Turn.io App</strong></td><td><a href="https://app.turn.io" target="_blank">app.turn.io</a></td><td>Acesso à plataforma</td></tr>
+            <tr><td><strong>Meta for Developers</strong></td><td><a href="https://developers.facebook.com/docs/whatsapp" target="_blank">developers.facebook.com/docs/whatsapp</a></td><td>Documentação técnica da WhatsApp API</td></tr>
+            <tr><td><strong>Meta Business Manager</strong></td><td><a href="https://business.facebook.com" target="_blank">business.facebook.com</a></td><td>Gerenciar WABA, templates, verificação</td></tr>
+            <tr><td><strong>Meta Business Help</strong></td><td><a href="https://www.facebook.com/business/help" target="_blank">facebook.com/business/help</a></td><td>Suporte oficial da Meta</td></tr>
+            <tr><td><strong>Políticas do WhatsApp</strong></td><td><a href="https://www.whatsapp.com/legal/business-policy" target="_blank">whatsapp.com/legal/business-policy</a></td><td>O que pode e não pode ser feito na API</td></tr>
+            <tr><td><strong>Playlist: Como usar o Turn.io</strong></td><td><a href="https://www.youtube.com/watch?v=YGlhzhufNpA&list=PLqXRjkiFo3NA636Gp9SR5MwzjWq0EWHkh" target="_blank">youtube.com · playlist Turn.io</a></td><td>Série de vídeos oficiais sobre uso da plataforma</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+    <div class="page-nav">
+      <button onclick="goTo(5)">← Anterior</button>
+      <span class="page-counter">6 de 6</span>
+      <button class="next" onclick="goTo(1)">↩ Início</button>
+    </div>
+  </div>
+
+
+</div><!-- /main -->
 
 <script src="script.js"></script>
 
