@@ -54,15 +54,15 @@
       <div class="glossary-item"><span class="glossary-term">Template (HSM)</span><span class="glossary-def">Mensagem pré-aprovada pelo Meta para iniciar conversas fora da janela de 24h.</span></div>
       <div class="glossary-item"><span class="glossary-term">Janela de 24h</span><span class="glossary-def">Após o usuário enviar qualquer mensagem, você tem 24h para responder livremente sem precisar de template.</span></div>
       <div class="glossary-item"><span class="glossary-term">Sessão de conversa</span><span class="glossary-def">Período ativo de conversa. Inicia quando o usuário manda uma mensagem ou quando você envia um template.</span></div>
-      <div class="glossary-item"><span class="glossary-term">Inbox (Turn.io)</span><span class="glossary-def">Canal de comunicação no Turn.io. Cada número de telefone corresponde a uma Inbox.</span></div>
-      <div class="glossary-item"><span class="glossary-term">Journey / Flow</span><span class="glossary-def">Fluxo automatizado construído no Turn.io. Define a lógica de respostas do chatbot. <strong>Cada número de telefone tem suas próprias jornadas</strong> — os fluxos criados para um número não aparecem nem interferem nos demais. Isso permite que números diferentes tenham experiências de conversa completamente independentes.</span></div>
+      <div class="glossary-item"><span class="glossary-term">Inbox (Turn.io)</span><span class="glossary-def">Canal de comunicação na Turn.io. Cada número de telefone corresponde a uma Inbox.</span></div>
+      <div class="glossary-item"><span class="glossary-term">Journey / Flow</span><span class="glossary-def">Fluxo automatizado construído na Turn.io. Define a lógica de respostas do chatbot. <strong>Cada número de telefone tem suas próprias jornadas</strong> — os fluxos criados para um número não aparecem nem interferem nos demais. Isso permite que números diferentes tenham experiências de conversa completamente independentes.</span></div>
       <div class="glossary-item"><span class="glossary-term">Messaging Tier</span><span class="glossary-def">Limite de mensagens por dia. Começa em 1.000 e sobe automaticamente com uso e boa qualidade.</span></div>
-      <div class="glossary-item"><span class="glossary-term">Token</span><span class="glossary-def">Credencial de autenticação necessária para que o Turn.io possa enviar mensagens em nome de um número. Sem um token válido e ativo, nenhuma mensagem pode ser enviada. A renovação dos tokens é automatizada pela equipe de engenharia — mas se um token for desativado manualmente ou expirar de forma inesperada, o envio de mensagens daquele número é interrompido imediatamente até que seja reativado.</span></div>
+      <div class="glossary-item"><span class="glossary-term">Token</span><span class="glossary-def">Credencial de autenticação necessária para que a Turn.io possa enviar mensagens em nome de um número. Sem um token válido e ativo, nenhuma mensagem pode ser enviada. A renovação dos tokens é automatizada pela equipe de engenharia — mas se um token for desativado manualmente ou expirar de forma inesperada, o envio de mensagens daquele número é interrompido imediatamente até que seja reativado.</span></div>
       <div class="glossary-item" style="border:none"><span class="glossary-term">Phone Quality Rating</span><span class="glossary-def">Avaliação do número pelo Meta (Verde/Amarelo/Vermelho). Impacta limites e pode levar à suspensão.</span></div>
 
       <h3 class="sub">WABAs atuais</h3>
-      <p class="body">Atualmente a ImpulsoGov opera suas WABAs (WhatsApp Business Accounts) vinculadas ao Meta Business Manager da organização, dentro da estrutura contratada com o Turn.io. 
-        Salvo os números que durante o piloto foi-se configurado dentro da Twilio. Mas já esta planejada a transição para o Turn.io.
+      <p class="body">Atualmente a ImpulsoGov opera suas WABAs (WhatsApp Business Accounts) vinculadas ao Meta Business Manager da organização, dentro da estrutura contratada com a Turn.io. 
+        Salvo os números que durante o piloto foi-se configurado dentro da Twilio. Mas já esta planejada a transição para a Turn.io.
         Cada WABA agrupa os números de telefone usados nos diferentes projetos e chatbots. 
         Cada WABA tem um nome de projeto e um ID.
         Mais detalhes abaixo.</p>
@@ -143,7 +143,7 @@
             <span class="acc-chevron">▼</span>
           </summary>
           <div class="acc-body">
-            <p class="body">O Turn.io opera num <strong>sistema de créditos pré-pago</strong>. A assinatura ativa dá acesso à plataforma, mas o envio de certos tipos de mensagem consome crédito adicional. Esse custo reflete diretamente a precificação da Meta, que é <strong>por mensagem enviada</strong> e varia conforme a <strong>categoria do template</strong> e o <strong>código do país</strong> do destinatário.</p>
+            <p class="body">A Turn.io opera num <strong>sistema de créditos pré-pago</strong>. A assinatura ativa dá acesso à plataforma, mas o envio de certos tipos de mensagem consome crédito adicional. Esse custo reflete diretamente a precificação da Meta, que é <strong>por mensagem enviada</strong> e varia conforme a <strong>categoria do template</strong> e o <strong>código do país</strong> do destinatário.</p>
 
             <div class="callout success">
               <span class="callout-icon">✅</span>
@@ -167,20 +167,20 @@
             <p class="body"><strong>Programa de Isenção (Waiver) da Meta:</strong> a Meta estendeu o programa de isenção de taxas até <strong>30 de setembro de 2026</strong>, porém de forma reduzida. O waiver agora cobre <strong>apenas templates de Utilidade e Autenticação</strong>, e somente para organizações com casos de uso em áreas como saúde, resposta a crises e engajamento cívico — perfil que se aplica à ImpulsoGov.</p>
             <div class="callout warning">
               <span class="callout-icon">⚠️</span>
-              <div><strong>Atenção, mesmo com o waiver</strong>Templates de <strong>Marketing não são mais cobertos</strong> por ninguém. E, mesmo coberto pela isenção, o saldo de crédito no Turn.io precisa estar em <strong>$0 ou positivo</strong> — se ficar negativo, o envio de templates (inclusive Utilidade e Autenticação) é bloqueado.</div>
+              <div><strong>Atenção, mesmo com o waiver</strong>Templates de <strong>Marketing não são mais cobertos</strong> por ninguém. E, mesmo coberto pela isenção, o saldo de crédito na Turn.io precisa estar em <strong>$0 ou positivo</strong> — se ficar negativo, o envio de templates (inclusive Utilidade e Autenticação) é bloqueado.</div>
             </div>
 
             <p class="body"><strong>Como funciona o crédito pré-pago:</strong></p>
             <ul class="list">
-              <li>O Turn.io <strong>paga a Meta em seu nome</strong> — durante o onboarding, a linha de crédito do Turn.io é compartilhada com a sua WABA, então todos os custos dos números da WABA são cobrados via Turn.io</li>
+              <li>A Turn.io <strong>paga a Meta em seu nome</strong> — durante o onboarding, a linha de crédito da Turn.io é compartilhada com a sua WABA, então todos os custos dos números da WABA são cobrados via Turn.io</li>
               <li>É um sistema <strong>pré-pago</strong>: para enviar mensagens não-gratuitas, é preciso ter crédito (top-up) na plataforma</li>
               <li>Os créditos só estão disponíveis para clientes ativos — primeiro a assinatura, depois o top-up</li>
-              <li>As tarifas são cobradas em <strong>USD</strong> (Turn.io é uma empresa dos EUA). O Turn.io não tem lucro sobre o valor da Meta — cobra apenas uma <strong>taxa de processamento de 5%</strong></li>
+              <li>As tarifas são cobradas em <strong>USD</strong> (Turn.io é uma empresa dos EUA). A Turn.io não tem lucro sobre o valor da Meta — cobra apenas uma <strong>taxa de processamento de 5%</strong></li>
               <li>Dependendo da estratégia e do público, é possível <strong>nunca precisar de top-up</strong> — caso você envie apenas mensagens gratuitas</li>
             </ul>
             <div class="callout info">
               <span class="callout-icon">📊</span>
-              <div><strong>Onde acompanhar</strong>Em <strong>Settings → Message Billing</strong> você vê o saldo de crédito (em tempo real), saldo de mensagens gratuitas do waiver, histórico detalhado por tipo de mensagem e a opção de alternar entre visualização em "Mensagens" e "USD". Os valores nos gráficos são <strong>estimativas</strong> baseadas nas notificações de entrega da Meta — o Turn.io estima por baixo para nunca cobrar a mais, então não batem exatamente com o dashboard da Meta.</div>
+              <div><strong>Onde acompanhar</strong>Em <strong>Settings → Message Billing</strong> você vê o saldo de crédito (em tempo real), saldo de mensagens gratuitas do waiver, histórico detalhado por tipo de mensagem e a opção de alternar entre visualização em "Mensagens" e "USD". Os valores nos gráficos são <strong>estimativas</strong> baseadas nas notificações de entrega da Meta — a Turn.io estima por baixo para nunca cobrar a mais, então não batem exatamente com o dashboard da Meta.</div>
             </div>
           </div>
         </details>
