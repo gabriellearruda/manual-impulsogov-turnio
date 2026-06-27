@@ -567,6 +567,16 @@
       </div>
 
       <h3 class="sub">Arquitetura de um fluxo</h3>
+      <p class="body">Os componentes que tornam uma jornada eficaz:</p>
+      <ul class="list">
+        <li><strong>Entrada clara</strong> — gatilho bem definido (keyword, template, primeira mensagem); o usuário sabe que está interagindo com um bot</li>
+        <li><strong>Lógica simples</strong> — máximo 2–3 níveis de ramificação; fluxos profundos demais perdem o usuário; cada nó tem um propósito único</li>
+        <li><strong>Todo <code>if</code> tem um <code>else</code></strong> — nunca deixe um caminho sem saída</li>
+        <li><strong>Mensagens bem escritas</strong> — curtas, uma ideia por mensagem; use botões em vez de texto livre sempre que possível para reduzir erros de interpretação</li>
+        <li><strong>Tratamento de falhas</strong> — fallback para resposta não reconhecida ("Não entendi, escolha uma opção:"); limite de tentativas antes de encerrar</li>
+        <li><strong>Fim definido</strong> — todo fluxo tem um encerramento explícito com opção de reiniciar ou continuar</li>
+        <li><strong>Mensurabilidade</strong> — salve variáveis nos nós principais para identificar onde os usuários abandonam o fluxo</li>
+      </ul>
       <div class="video-embed">
         <iframe src="https://www.youtube.com/embed/VIDEO_ID_CONSTRUCAO" title="Vídeo: Construção do Fluxo" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
       </div>
